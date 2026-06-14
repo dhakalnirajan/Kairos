@@ -1,0 +1,47 @@
+{
+  "name": "kairos-code",
+  "version": "0.1.0",
+  "description": "Terminal-native AI coding agent. Local-first, extensible, secure.",
+  "type": "module",
+  "bin": {
+    "kairos": "./dist/cli.js"
+  },
+  "main": "./dist/cli.js",
+  "scripts": {
+    "dev": "bun run --hot src/cli.ts",
+    "build": "bun build src/cli.ts --outdir dist --target bun --splitting",
+    "start": "bun run dist/cli.js",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit",
+    "lint": "tsc --noEmit",
+    "setup": "bun run src/cli.ts setup",
+    "web": "bun run src/cli.ts web"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "neo-blessed": "^0.2.0",
+    "openai": "^4.77.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/blessed": "^0.1.27",
+    "@types/bun": "latest",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
+  },
+  "keywords": [
+    "ai",
+    "coding-agent",
+    "terminal",
+    "tui",
+    "llm",
+    "bun",
+    "cli"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": ""
+  }
+}
