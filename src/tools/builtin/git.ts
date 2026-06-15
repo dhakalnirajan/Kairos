@@ -26,10 +26,6 @@ export const gitTool: ToolInstance = {
       return { success: false, output: '', error: `Unknown git operation: ${operation}` };
     }
 
-    const isRead = READ_OPS.includes(operation);
-    this.riskLevel = isRead ? 'read' : 'write';
-    this.isIdempotent = isRead;
-
     const cmdArgs = ['git', operation, ...args];
 
     if (operation === 'commit') {

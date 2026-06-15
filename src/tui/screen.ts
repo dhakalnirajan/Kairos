@@ -8,6 +8,11 @@ export function createScreen(): blessed.Widgets.Screen {
     fullUnicode: true,
     dockBorders: true,
     ignoreLocked: ['C-c', 'C-q'],
+    style: {
+      fg: '#E0E0E0',
+      bg: '#1A1A2E',
+      bold: false,
+    },
   });
 
   return screen;

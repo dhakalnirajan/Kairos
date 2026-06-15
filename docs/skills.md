@@ -1,51 +1,110 @@
 # Skills
 
-Skills are YAML-defined workflows that extend Kairos functionality.
+Kairos supports skills — reusable knowledge and workflows.
 
-## Skill Structure
+## What Are Skills?
 
-```yaml
+Skills are markdown files containing:
+- **Name** and **description**
+- **Trigger conditions** (when to apply)
+- **Step-by-step instructions**
+
+## Skill Format
+
+```markdown
+---
 name: code-review
-description: Automated code review workflow
-triggers:
-  - /review
+description: Comprehensive code review checklist
+trigger: code review request
+---
 
-steps:
-  - action: read_files
-    params:
-      pattern: "**/*.ts"
-  
-  - action: analyze_code
-    params:
-      checks:
-        - security
-        - performance
-        - style
-  
-  - action: generate_report
-    params:
-      format: markdown
+# Code Review Skill
+
+## Steps
+
+1. Check for type safety (`any` usage, missing null checks)
+2. Verify error handling
+3. Look for security issues
+4. Assess performance
+5. Check test coverage
+6. Review documentation
 ```
 
 ## Creating Skills
 
-1. Create a YAML file in `~/.kairos/skills/`
-2. Define name, description, triggers, and steps
-3. Skills are auto-discovered on startup
+### Manual Creation
 
-## Built-in Skills
+```bash
+# Create skill directory
+mkdir -p ~/.kairos/skills
 
-| Skill | Description |
-|-------|-------------|
-| `code-review` | Automated code review |
-| `test-gen` | Test generation |
-| `refactor` | Code refactoring |
-| `document` | Documentation generation |
+# Create skill file
+cat > ~/.kairos/skills/code-review.md << 'EOF'
+---
+name: code-review
+description: Code review checklist
+trigger: review
+---
 
-## Skill Commands
+# Code Review
+
+1. Check types
+2. Check errors
+3. Check security
+4. Check performance
+EOF
+```
+
+### Via Command
+
+```bash
+/skill create --name my-skill --description "My custom skill"
+```
+
+## Using Skills
+
+### Automatic Matching
+
+Skills are automatically matched based on trigger conditions and injected into the system prompt.
+
+### Manual Invocation
 
 ```bash
 /skill list          # List available skills
-/skill run <name>    # Run a skill
-/skill create        # Create new skill
+/skill run code-review  # Run a specific skill
 ```
+
+## Skill Storage
+
+Skills are stored in:
+- `~/.kairos/skills/` — Global skills
+- `.kairos/skills/` — Project skills
+
+## Distilled Skills
+
+Kairos can learn skills from your interactions:
+
+```bash
+# Distill patterns from recent conversations
+/distill
+```
+
+This analyzes your recent interactions and creates reusable skill files.
+
+## Skill Marketplace
+
+```bash
+# Search for skills
+/marketplace search code-review
+
+# Install a skill
+/marketplace install my-skill
+
+# List installed skills
+/marketplace list
+```
+
+## Next Steps
+
+- [Recipes](recipes.md) — Common workflows
+- [Tools](tools.md) — Available tools

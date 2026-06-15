@@ -13,10 +13,11 @@ export interface ASTNode {
 
 export interface CodeSymbol {
   name: string;
-  type: 'function' | 'class' | 'interface' | 'type' | 'variable' | 'export';
+  type: "function" | "class" | "interface" | "type" | "variable" | "export";
   file: string;
   line: number;
   column: number;
+  exported?: boolean;
 }
 
 export interface Dependency {
@@ -35,22 +36,31 @@ export class ASTNavigator {
     for (const entry of entries) {
       const fullPath = join(dir, entry);
       const stat = statSync(fullPath);
-      if (stat.isDirectory() && !entry.startsWith('.') && entry !== 'node_modules') {
+      if (
+        stat.isDirectory() &&
+        !entry.startsWith(".") &&
+        entry !== "node_modules"
+      ) {
         await this.scanDirectory(fullPath);
       } else if (this.isCodeFile(entry)) {
-        await this.scanFile(fullPath);
+        await this.scanFileEntry(fullPath);
       }
     }
   }
 
-  private isCodeFile(filename: string): boolean {
-    const ext = extname(filename);
-    return ['.ts', '.tsx', '.js', '.jsx', '.py', '.go', '.rs'].includes(ext);
+  public async scanFile(filePath: string): Promise<void> {
+    if (!this.isCodeFile(filePath)) return;
+    await this.scanFileEntry(filePath);
   }
 
-  private async scanFile(filePath: string): Promise<void> {
+  private isCodeFile(filename: string): boolean {
+    const ext = extname(filename);
+    return [".ts", ".tsx", ".js", ".jsx", ".py", ".go", ".rs"].includes(ext);
+  }
+
+  private async scanFileEntry(filePath: string): Promise<void> {
     try {
-      const content = readFileSync(filePath, 'utf-8');
+      const content = readFileSync(filePath, "utf-8");
       this.files.set(filePath, content);
       this.extractSymbols(filePath, content);
       this.extractDependencies(filePath, content);
@@ -59,16 +69,18 @@ export class ASTNavigator {
 
   private extractSymbols(filePath: string, content: string): void {
     const symbols: CodeSymbol[] = [];
-    const lines = content.split('\n');
+    const lines = content.split("\n");
 
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i]!;
 
-      const funcMatch = line.match(/(?:export\s+)?(?:async\s+)?function\s+(\w+)/);
+      const funcMatch = line.match(
+        /(?:export\s+)?(?:async\s+)?function\s+(\w+)/,
+      );
       if (funcMatch) {
         symbols.push({
           name: funcMatch[1]!,
-          type: 'function',
+          type: "function",
           file: filePath,
           line: i + 1,
           column: 0,
@@ -79,7 +91,7 @@ export class ASTNavigator {
       if (classMatch) {
         symbols.push({
           name: classMatch[1]!,
-          type: 'class',
+          type: "class",
           file: filePath,
           line: i + 1,
           column: 0,
@@ -90,7 +102,7 @@ export class ASTNavigator {
       if (interfaceMatch) {
         symbols.push({
           name: interfaceMatch[1]!,
-          type: 'interface',
+          type: "interface",
           file: filePath,
           line: i + 1,
           column: 0,
@@ -101,7 +113,7 @@ export class ASTNavigator {
       if (typeMatch) {
         symbols.push({
           name: typeMatch[1]!,
-          type: 'type',
+          type: "type",
           file: filePath,
           line: i + 1,
           column: 0,
@@ -112,11 +124,30 @@ export class ASTNavigator {
       if (constMatch) {
         symbols.push({
           name: constMatch[1]!,
-          type: 'variable',
+          type: "variable",
           file: filePath,
           line: i + 1,
           column: 0,
+          exported: /\bexport\b/.test(line),
         });
+      }
+
+      const exportListMatch = line.match(/export\s*{\s*([^}]+)\s*}/);
+      if (exportListMatch) {
+        const names = exportListMatch[1]!
+          .split(",")
+          .map((name) => name.trim())
+          .filter(Boolean);
+        for (const name of names) {
+          symbols.push({
+            name,
+            type: "export",
+            file: filePath,
+            line: i + 1,
+            column: 0,
+            exported: true,
+          });
+        }
       }
     }
 
@@ -125,7 +156,7 @@ export class ASTNavigator {
 
   private extractDependencies(filePath: string, content: string): void {
     const deps: Dependency[] = [];
-    const lines = content.split('\n');
+    const lines = content.split("\n");
 
     for (const line of lines) {
       const importMatch = line.match(/import\s+.*from\s+['"](.+?)['"]/);
@@ -133,7 +164,7 @@ export class ASTNavigator {
         deps.push({
           from: filePath,
           to: importMatch[1]!,
-          type: 'import',
+          type: "import",
         });
       }
 
@@ -142,7 +173,7 @@ export class ASTNavigator {
         deps.push({
           from: filePath,
           to: exportMatch[1]!,
-          type: 'export',
+          type: "export",
         });
       }
     }
@@ -167,12 +198,16 @@ export class ASTNavigator {
   }
 
   findDeadCode(): Array<{ file: string; symbol: CodeSymbol; reason: string }> {
-    const deadCode: Array<{ file: string; symbol: CodeSymbol; reason: string }> = [];
+    const deadCode: Array<{
+      file: string;
+      symbol: CodeSymbol;
+      reason: string;
+    }> = [];
     const allExports = new Set<string>();
 
     for (const symbols of this.symbols.values()) {
       for (const symbol of symbols) {
-        if (symbol.type === 'export') {
+        if (symbol.type === "export" || symbol.exported) {
           allExports.add(symbol.name);
         }
       }
@@ -180,7 +215,7 @@ export class ASTNavigator {
 
     for (const [file, symbols] of this.symbols) {
       for (const symbol of symbols) {
-        if (symbol.type === 'function' || symbol.type === 'class') {
+        if (symbol.type === "function" || symbol.type === "class") {
           const isUsed = this.isSymbolUsed(symbol.name, file);
           if (!isUsed && !allExports.has(symbol.name)) {
             deadCode.push({
@@ -205,11 +240,18 @@ export class ASTNavigator {
     return false;
   }
 
-  getArchitecture(): { nodes: string[]; edges: Array<{ from: string; to: string }> } {
-    const nodes = Array.from(new Set([
-      ...this.files.keys(),
-      ...Array.from(this.symbols.keys()),
-    ]));
+  getArchitecture(): {
+    nodes: string[];
+    edges: Array<{ from: string; to: string }>;
+  } {
+    const nodes = Array.from(
+      new Set([
+        ...this.files.keys(),
+        ...Array.from(this.symbols.values()).flatMap((symbols) =>
+          symbols.map((symbol) => symbol.name),
+        ),
+      ]),
+    );
 
     const edges: Array<{ from: string; to: string }> = [];
     for (const deps of this.dependencies.values()) {

@@ -1,56 +1,99 @@
 # Safety Pipeline
 
-Kairos implements a 6-layer safety pipeline for all tool calls.
+Kairos implements a 6-layer safety pipeline that runs on every tool call.
 
-## Layers
+## Safety Layers
 
-### Layer 1: Input Sanitization
-- Strips null bytes and control characters
-- Removes ANSI escape codes
-- Normalizes Unicode
+### L1: Input Sanitization
 
-### Layer 2: Harm Detection
-- Blocks destructive commands (`rm -rf`, `format`, `drop table`)
-- Detects fork bombs
-- Blocks system directory access
+- Strips ANSI escape sequences
+- Removes null bytes and control characters
+- Detects prompt injection patterns ("ignore all previous instructions", "system: you are")
 
-### Layer 3: Path Confinement
-- Enforces workspace root boundary
-- Blocks path traversal (`../`)
-- Blocks access to system directories
+### L2: Harm Detection
 
-### Layer 4: Network Security
-- Blocks private/internal IPs (127.x, 10.x, 192.168.x)
-- Prevents SSRF attacks
-- Blocks DNS rebinding
+11 regex patterns covering:
+- **Destructive filesystem**: `rm -rf /`, `format`, `del /s /q`
+- **Disk destruction**: `mkfs`, `dd if=`
+- **Remote execution**: `curl|wget` piped to shell
+- **Obfuscated execution**: base64 decode piped to shell
+- **System shutdown**: `shutdown`, `reboot`, `poweroff`
+- **User management**: `useradd`, `userdel`
+- **Permission escalation**: `chmod 777`, `chown -R`
+- **Fork bombs**: `:(){ :|:& };:`
 
-### Layer 5: HITL Approval
-- Requires confirmation for high-risk tools
-- Configurable per-tool approval
-- TUI modal for approval
+### L3: Risk Classification
 
-### Layer 6: Audit Logging
-- Logs all tool executions
-- Scrubs secrets from logs
-- Records timestamps, duration, results
+Maps tools to risk levels:
+- **read**: Safe read-only operations
+- **write**: File modifications
+- **execute**: Shell commands
+- **network**: HTTP requests
 
-## Configuration
+### L4: Policy Check
+
+Mode-based blanket policies:
+- **PLAN mode**: Blocks all mutating tools
+- **ULTRAPLAN mode**: Blocks all mutating tools
+- **DREAM mode**: Blocks all interactive tools
+- **NORMAL mode**: HITL for risky tools
+
+### L5: Path Confinement
+
+Blocks writes/deletes to system directories:
+- `/etc`, `/sys`, `/proc`, `/boot`
+- `C:\Windows\System32`
+
+### L6: HITL Approval
+
+Human-in-the-loop approval for:
+- Shell commands (`bash`)
+- File writes (`write_file`)
+- File edits (`edit_file`)
+
+Configurable via `requireConfirmationFor` in config.
+
+## Safety Configuration
 
 ```json
 {
   "safety": {
     "enabled": true,
     "allowedRiskLevels": ["read", "write", "execute"],
-    "blockedCommands": ["rm -rf /", "format"],
-    "requireConfirmationFor": ["bash", "write", "edit"],
-    "autoApprove": false
+    "blockedCommands": ["rm -rf /", "format", "del /s /q"],
+    "blockedPaths": ["/etc", "/System", "/Windows/System32"],
+    "autoApprove": false,
+    "requireConfirmationFor": ["bash", "write", "edit"]
   }
 }
 ```
 
-## Environment Variables
+## YOLO Mode
+
+Skip all safety checks:
 
 ```bash
-KAIROS_SAFETY_ENABLED=true
-KAIROS_SAFETY_AUTO_APPROVE=false
+kairos --yolo
+# or
+kairos --mode YOLO
 ```
+
+**WARNING**: YOLO mode bypasses all safety checks. Use only in controlled environments.
+
+## Safety Commands
+
+```bash
+# View blocked commands
+kairos config show | jq .safety.blockedCommands
+
+# Add a blocked command
+kairos config set safety.blockedCommands+ "dangerous_command"
+
+# Disable safety (NOT recommended)
+kairos config set safety.enabled false
+```
+
+## Next Steps
+
+- [Configuration](configuration.md) — Safety configuration options
+- [CLI Flags](cli-flags.md) — Safety-related flags

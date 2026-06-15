@@ -14,9 +14,28 @@ export function createCommandPalette(
   theme: Theme,
 ): Overlay & { setQuery(q: string): void; onSelect(handler: (cmd: string) => void): void } {
   const commands = [
-    '/compact', '/dream', '/init', '/undo', '/redo', '/new',
-    '/sessions', '/editor', '/details', '/thinking', '/export',
-    '/models', '/themes', '/help', '/quit',
+    "/help",
+    "/clear",
+    "/quit",
+    "/exit",
+    "/status",
+    "/version",
+    "/model",
+    "/mode",
+    "/theme",
+    "/dream",
+    "/compact",
+    "/recall",
+    "/forget",
+    "/rules",
+    "/alias",
+    "/knowledge",
+    "/persona",
+    "/workflow",
+    "/metrics",
+    "/undo",
+    "/sessions",
+    "/export",
   ];
   let selectHandler: ((cmd: string) => void) | null = null;
 
@@ -33,7 +52,8 @@ export function createCommandPalette(
       fg: theme.fg,
       bg: theme.bg,
       border: { fg: theme.primary },
-      label: theme.primary,
+      label: { fg: theme.primary } as any,
+      bold: false,
       selected: { bg: theme.primary, fg: '#fff' },
       item: { fg: theme.fg },
     },
@@ -96,7 +116,8 @@ export function createFilePicker(
       fg: theme.fg,
       bg: theme.bg,
       border: { fg: theme.primary },
-      label: theme.primary,
+      label: { fg: theme.primary } as any,
+      bold: false,
       selected: { bg: theme.primary, fg: '#fff' },
       item: { fg: theme.fg },
     },
@@ -149,6 +170,7 @@ export function createModalPrompt(
       bg: theme.bg,
       border: { fg: theme.warning },
       label: { fg: theme.warning },
+      bold: false,
     },
     hidden: true,
   });
@@ -161,6 +183,7 @@ export function createModalPrompt(
     height: 3,
     tags: true,
     content: '',
+    style: { fg: theme.fg, bg: theme.bg, bold: false },
   });
 
   const btnYes = blessed.button({
@@ -174,6 +197,7 @@ export function createModalPrompt(
     style: {
       fg: '#fff',
       bg: theme.success,
+      bold: false,
       focus: { bg: theme.primary },
     },
   });
@@ -189,6 +213,7 @@ export function createModalPrompt(
     style: {
       fg: '#fff',
       bg: theme.error,
+      bold: false,
       focus: { bg: theme.primary },
     },
   });

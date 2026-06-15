@@ -41,6 +41,7 @@ const ROOT_FLAGS: CliFlag[] = [
   { name: 'web', description: 'Start web interface', type: 'boolean' },
   { name: 'port', description: 'Port number', type: 'number' },
   { name: 'host', description: 'Bind host', type: 'string' },
+  { name: 'no-tui', description: 'Skip TUI, use plain readline', type: 'boolean' },
 ];
 
 const ROOT_COMMANDS: CliCommand[] = [

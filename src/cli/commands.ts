@@ -18,7 +18,7 @@ export async function main(argv: string[]): Promise<void> {
   }
 
   if (hasFlag(args, 'version')) {
-    console.log('kairos-code v0.1.0');
+    console.log('kairos-code v0.1.1');
     return;
   }
 
@@ -121,13 +121,6 @@ async function runHeadless(query: string, args: ReturnType<typeof parseArgs>): P
 async function runInteractive(args: ReturnType<typeof parseArgs>): Promise<void> {
   const config = await loadConfig(args.flags as Record<string, string>);
 
-  if (hasFlag(args, 'i')) {
-    console.log('Interactive mode not yet implemented. Use `kairos dev` for TUI.');
-    return;
-  }
-
-  const { TUI } = await import('../tui/index.ts');
-  const tui = new TUI(config);
   const providerName = getFlag(args, 'provider') ?? config.llm.provider;
   const manager = new LLMProviderManager({
     preferredProvider: providerName,
@@ -141,40 +134,97 @@ async function runInteractive(args: ReturnType<typeof parseArgs>): Promise<void>
   const memory = new MemoryDatabase(getDbPath());
 
   const mode: AgentMode = getFlag(args, 'mode') as AgentMode ?? 'NORMAL';
+  const useNoTui = hasFlag(args, 'no-tui');
+
+  if (useNoTui) {
+    await runReadlineREPL(llm, tools, memory, config, mode);
+    return;
+  }
+
+  try {
+    const { TUI } = await import("../tui/index.ts");
+    const tui = new TUI(config, tools, `tui-${Date.now()}`);
+
+    const agent = new AgentLoop(llm, tools, memory, config, {
+      mode,
+      workspaceRoot: process.cwd(),
+      sessionId: `tui-${Date.now()}`,
+    });
+
+    await tui.start();
+
+    tui.onInput(async (text) => {
+      tui.appendMessage('user', text);
+
+      try {
+        const stream = agent.stream(text);
+        let currentToken = '';
+
+        for await (const event of stream) {
+          if (event.type === 'token') {
+            currentToken += event.content;
+            tui.getStreamRenderer().appendToken(event.content);
+          }
+          if ('name' in event && event.type === 'tool_call') {
+            tui.getStreamRenderer().appendToolCall(event.name, JSON.stringify(event.result));
+          }
+        }
+
+        tui.getStreamRenderer().flush();
+        tui.appendMessage('assistant', currentToken);
+      } catch (e) {
+        tui.appendMessage('error', `Error: ${e}`);
+      }
+    });
+
+    tui.updateStatus({ mode, model: config.llm.model, tokens: 0, cost: 0 });
+  } catch (e) {
+    console.error(`\x1b[33mTUI failed to start: ${e}\x1b[0m`);
+    console.log('Falling back to plain readline mode. Use --no-tui to skip TUI.\n');
+    await runReadlineREPL(llm, tools, memory, config, mode);
+  }
+}
+
+async function runReadlineREPL(
+  llm: ReturnType<typeof import('../llm/client.ts').createLLMClient>,
+  tools: ToolRegistry,
+  memory: MemoryDatabase,
+  config: Awaited<ReturnType<typeof loadConfig>>,
+  mode: AgentMode,
+): Promise<void> {
+  const readline = await import('readline');
+  const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 
   const agent = new AgentLoop(llm, tools, memory, config, {
     mode,
     workspaceRoot: process.cwd(),
-    sessionId: `tui-${Date.now()}`,
+    sessionId: `repl-${Date.now()}`,
   });
 
-  await tui.start();
+  console.log(`\x1b[36mKairos Code v0.1.1 (readline mode)\x1b[0m`);
+  console.log(`Provider: ${config.llm.provider} | Model: ${config.llm.model} | Mode: ${mode}`);
+  console.log('Type your message and press Enter. Type /exit to quit.\n');
 
-  tui.onInput(async (text) => {
-    tui.appendMessage('user', text);
-
-    try {
-      const stream = agent.stream(text);
-      let currentToken = '';
-
-      for await (const event of stream) {
-        if (event.type === 'token') {
-          currentToken += event.content;
-          tui.getStreamRenderer().appendToken(event.content);
-        }
-        if ('name' in event && event.type === 'tool_call') {
-          tui.getStreamRenderer().appendToolCall(event.name, JSON.stringify(event.result));
-        }
+  const prompt = () => {
+    rl.question('\x1b[32mYou>\x1b[0m ', async (text: string) => {
+      const trimmed = text.trim();
+      if (!trimmed || trimmed === '/exit' || trimmed === '/quit') {
+        memory.close();
+        process.exit(0);
       }
 
-      tui.getStreamRenderer().flush();
-      tui.appendMessage('assistant', currentToken);
-    } catch (e) {
-      tui.appendMessage('error', `Error: ${e}`);
-    }
-  });
+      try {
+        const result = await agent.run(trimmed);
+        console.log(`\n\x1b[34mKairos>\x1b[0m ${result.response}\n`);
+      } catch (e) {
+        console.error(`\n\x1b[31mError: ${e}\x1b[0m\n`);
+      }
 
-  tui.updateStatus({ mode, model: config.llm.model, tokens: 0, cost: 0 });
+      prompt();
+    });
+  };
+
+  prompt();
 }
 
 async function startDaemon(args: ReturnType<typeof parseArgs>): Promise<void> {
@@ -281,26 +331,25 @@ async function handleProvider(args: ReturnType<typeof parseArgs>): Promise<void>
 
 function printUsage(): void {
   console.log(`
-kairos-code v0.1.0 - Terminal-native AI coding agent
+kairos-code v0.1.1 - Terminal-native AI coding agent
 
 Usage:
-  kairos                         Start TUI mode
-  kairos -p "query"              Headless one-shot query
-  kairos web                     Start web interface (port 3333)
-  kairos web --port 8080         Start web on custom port
-  kairos setup                   First-run interactive wizard
-  kairos daemon                  Start background daemon
-  kairos provider list           List all providers and status
-  kairos provider discover       Auto-discover local providers
-  kairos provider test <name>    Test provider connection
-  kairos auth login|list|logout  Manage API keys
-  kairos session list            List past sessions
+  bun run src/cli.ts              Start TUI mode
+  bun run src/cli.ts --no-tui     Start readline REPL (no TUI)
+  bun run src/cli.ts -p "query"   Headless one-shot query
+  bun run src/cli.ts web          Start web interface (port 3333)
+  bun run src/cli.ts setup        First-run interactive wizard
+  bun run src/cli.ts daemon       Start background daemon
+  bun run src/cli.ts provider list     List all providers
+  bun run src/cli.ts provider discover Auto-discover local providers
+  bun run src/cli.ts provider test <n> Test provider connection
+  bun run src/cli.ts session list      List past sessions
 
 Flags:
   -p, --prompt <query>           Run headless query
   --mode <mode>                  Agent mode (NORMAL/PLAN/AUTO/YOLO/etc)
   --compose                      Use 8-step compose pipeline
-  -i, --interactive              Interactive CLI mode
+  --no-tui                       Skip TUI, use plain readline REPL
   --daemon                       Start as daemon
   --help                         Show this help
   --version                      Show version

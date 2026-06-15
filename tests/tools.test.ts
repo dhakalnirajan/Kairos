@@ -50,7 +50,12 @@ describe('ToolRegistry', () => {
   test('registerAllBuiltinTools registers all tools', async () => {
     const registry = new ToolRegistry();
     await registerAllBuiltinTools(registry);
-    expect(registry.getAll().length).toBeGreaterThanOrEqual(7);
+    expect(registry.getAll().length).toBeGreaterThanOrEqual(11);
+    expect(registry.get("workflow")).toBeDefined();
+    expect(registry.get("alias")).toBeDefined();
+    expect(registry.get("knowledge")).toBeDefined();
+    expect(registry.get("metrics")).toBeDefined();
+    expect(registry.get("undo")).toBeDefined();
   });
 });
 

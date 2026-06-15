@@ -2,9 +2,28 @@ import blessed from 'neo-blessed';
 import type { Theme } from './themes.ts';
 
 const SLASH_COMMANDS = [
-  '/compact', '/dream', '/init', '/undo', '/redo', '/new',
-  '/sessions', '/editor', '/details', '/thinking', '/export',
-  '/models', '/themes', '/help', '/quit',
+  "/help",
+  "/clear",
+  "/quit",
+  "/exit",
+  "/status",
+  "/version",
+  "/model",
+  "/mode",
+  "/theme",
+  "/dream",
+  "/compact",
+  "/recall",
+  "/forget",
+  "/rules",
+  "/alias",
+  "/knowledge",
+  "/persona",
+  "/workflow",
+  "/metrics",
+  "/undo",
+  "/sessions",
+  "/export",
 ];
 
 function fuzzyMatch(query: string, candidates: string[]): string[] {
@@ -42,6 +61,7 @@ export function createInputBox(
       bg: theme.bg,
       border: { fg: theme.border },
       label: { fg: theme.primary },
+      bold: false,
       focus: { border: { fg: theme.primary } },
     },
     inputOnFocus: true,

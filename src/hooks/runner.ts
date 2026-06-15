@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { getKairosDir } from '../utils/paths.ts';
+import { getKairosDir, getTempDir } from '../utils/paths.ts';
 import { eventBus, type EventType } from './bus.ts';
 import type { KairosConfigOutput } from '../config/schema.ts';
 
@@ -72,7 +72,8 @@ export class HookRunner {
 
   private async executeHook(hook: Hook, data: Record<string, unknown>): Promise<void> {
     try {
-      const tempPath = join('/tmp', `hook-${hook.name}-${Date.now()}.sh`);
+      const tempDir = getTempDir();
+      const tempPath = join(tempDir, `hook-${hook.name}-${Date.now()}.sh`);
       await Bun.write(tempPath, hook.script);
 
       const proc = Bun.spawn(['sh', tempPath], {

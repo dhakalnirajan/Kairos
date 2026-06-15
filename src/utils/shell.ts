@@ -72,3 +72,31 @@ export function quoteArgument(arg: string, shell?: ShellType): string {
   }
   return arg;
 }
+
+export class ShellWrapper {
+  private shell: ShellType;
+
+  constructor(shell?: ShellType) {
+    this.shell = shell ?? detectShell();
+  }
+
+  getShellType(): ShellType {
+    return this.shell;
+  }
+
+  wrapCommand(command: string): string[] {
+    return wrapCommand(command, this.shell);
+  }
+
+  quoteArgument(arg: string): string {
+    return quoteArgument(arg, this.shell);
+  }
+
+  getShellExtension(): string {
+    return getShellExtension();
+  }
+
+  getShellScriptPath(name: string): string {
+    return getShellScriptPath(name);
+  }
+}

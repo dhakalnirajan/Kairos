@@ -84,7 +84,7 @@ export const PathsConfigSchema = z.object({
 });
 
 export const KairosConfigSchema = z.object({
-  version: z.string().default('0.1.0'),
+  version: z.string().default('0.1.1'),
   llm: LLMConfigSchema.default({}),
   tools: ToolsConfigSchema.default({}),
   safety: SafetyConfigSchema.default({}),

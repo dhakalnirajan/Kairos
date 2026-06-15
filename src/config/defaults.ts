@@ -8,7 +8,7 @@ const IS_WINDOWS = process.platform === 'win32';
 const KAIROS_DIR = IS_WINDOWS ? join(HOME, 'AppData', 'Local', 'Kairos') : join(HOME, '.kairos');
 
 export const DEFAULT_CONFIG: KairosConfig = {
-  version: '0.1.0',
+  version: '0.1.1',
   llm: {
     provider: 'anthropic',
     model: 'claude-sonnet-4-20250514',

@@ -1,73 +1,89 @@
-# Terminal UI
+# Terminal UI (TUI)
 
-Kairos provides a full-featured terminal user interface.
+Kairos features a beautiful terminal UI built with neo-blessed.
 
 ## Layout
 
 ```
-┌─────────────────────────┬─────────────┐
-│                         │             │
-│         Chat            │   Context   │
-│         (70%)           │    (30%)    │
-│                         │             │
-├─────────────────────────┴─────────────┤
-│ Status Bar                            │
-└───────────────────────────────────────┘
-┌───────────────────────────────────────┐
-│ Input                                 │
-└───────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────┐
+│ Status Bar (mode, model, tokens, cost)                      │
+├──────────────────────────────┬──────────────────────────────┤
+│                              │ Context                      │
+│  Chat Panel                  │ ├─ Session Info               │
+│  (conversation history)      │ ├─ Memory                    │
+│                              │ └─ Tools                     │
+│                              │                              │
+├──────────────────────────────┴──────────────────────────────┤
+│ Input (type here, Enter to send, ↑/↓ for history)          │
+└─────────────────────────────────────────────────────────────┘
 ```
-
-## Features
-
-### Mascot Animation
-- Metallic shining effect with color gradient sweep
-- KAIROS in #208AAE, CODE in #A0A0A0
-- Sweeps left-to-right when agent is thinking
-
-### Command Palette
-- Press `Ctrl+K` to open
-- Fuzzy search across 110+ commands
-- Keyboard navigation
-
-### Smart Scroll
-- Auto-scroll during streaming
-- Halt on manual scroll
-- Resume on new message
-
-### Mouse Support
-- Clickable panes
-- Scroll wheel
-- Double-click selection
 
 ## Keyboard Shortcuts
 
-| Shortcut | Action |
-|----------|--------|
+| Key | Action |
+|-----|--------|
+| `Enter` | Send message |
+| `↑` / `↓` | Navigate history |
+| `Tab` | Cycle mode (NORMAL → PLAN → AUTO → NORMAL) |
+| `Ctrl+K` | Open command palette |
+| `Ctrl+P` | Open file picker |
 | `Ctrl+C` | Exit |
-| `Ctrl+K` | Command palette |
-| `Ctrl+P` | File picker |
-| `Tab` | Autocomplete |
-| `Up/Down` | History |
+| `Ctrl+D` | Exit |
 
 ## Themes
 
+Available themes:
+- `default` — Dark blue/teal
+- `dark` — GitHub dark
+- `light` — Light theme
+- `monokai` — Monokai colors
+- `dracula` — Dracula theme
+
+Switch themes:
 ```bash
-kairos --theme dark
-kairos --theme light
-kairos --theme monokai
-kairos --theme dracula
+/theme dracula
 ```
 
-## Configuration
+## Status Bar
 
-```json
-{
-  "tui": {
-    "theme": "default",
-    "showTimestamps": true,
-    "showTokenCount": true,
-    "compactMode": false
-  }
-}
+Shows:
+- **Mode** — Current agent mode (color-coded)
+- **Model** — Active LLM model
+- **Tokens** — Token count
+- **Cost** — Estimated cost
+
+## Panels
+
+### Chat Panel
+- Displays conversation history
+- Role-colored headers (User/Assistant/Tool)
+- Auto-scrolls to bottom
+- Streaming support
+
+### Context Panel
+- Session information
+- Memory entries
+- Tool usage log
+
+### Command Palette
+Press `Ctrl+K` to open:
+- Fuzzy search commands
+- Select with Enter
+- Cancel with Escape
+
+## TUI Themes
+
+```typescript
+const THEMES = {
+  default: { primary: '#208AAE', bg: '#1A1A2E', fg: '#E0E0E0', ... },
+  dark:    { primary: '#4A90D9', bg: '#0D1117', fg: '#C9D1D9', ... },
+  light:   { primary: '#0366D6', bg: '#FFFFFF', fg: '#24292E', ... },
+  monokai: { primary: '#A6E22E', bg: '#272822', fg: '#F8F8F2', ... },
+  dracula: { primary: '#BD93F9', bg: '#282A36', fg: '#F8F8F2', ... },
+};
 ```
+
+## Next Steps
+
+- [Configuration](configuration.md) — TUI configuration options
+- [Slash Commands](slash-commands.md) — Available commands

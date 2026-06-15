@@ -1,51 +1,129 @@
-# LLM Providers
+# Providers
 
-Kairos supports 19 LLM providers with auto-discovery and fallback.
+Kairos supports 20+ LLM providers, from local inference servers to cloud APIs.
+
+## Provider Overview
+
+| Provider | Type | Default Model | Setup |
+|----------|------|---------------|-------|
+| llama.cpp | Local | `local` | Server on `:8080` |
+| Ollama | Local | `llama3` | Server on `:11434` |
+| LM Studio | Local | `local` | Server on `:1234` |
+| OpenAI | Cloud | `gpt-4o` | API key required |
+| Anthropic | Cloud | `claude-sonnet-4-20250514` | API key required |
+| Gemini | Cloud | `gemini-1.5-pro` | API key required |
+| Groq | Cloud | `llama-3.3-70b-versatile` | API key required |
+| DeepSeek | Cloud | `deepseek-chat` | API key required |
+| Mistral | Cloud | `mistral-large-latest` | API key required |
+| OpenRouter | Cloud | `anthropic/claude-3.5-sonnet` | API key required |
 
 ## Local Providers
 
-| Provider | Default URL | Notes |
-|----------|-------------|-------|
-| llama.cpp | `http://localhost:8080` | Auto-detects legacy/modern API |
-| Ollama | `http://localhost:11434` | Dynamic model listing |
-| LM Studio | `http://localhost:1234/v1` | OpenAI-compatible |
-| Text Gen WebUI | `http://localhost:5000/v1` | Oobabooga |
-| LocalAI | `http://localhost:8080/v1` | Multi-model support |
+### llama.cpp
+
+```bash
+# Start llama-server
+./llama-server -m model.gguf --port 8080
+
+# Configure Kairos
+kairos setup
+# Provider: llamacpp
+# Base URL: http://localhost:8080
+# Model: local
+```
+
+### Ollama
+
+```bash
+# Install Ollama
+curl -fsSL https://ollama.com/install.sh | sh
+
+# Pull a model
+ollama pull llama3
+
+# Configure Kairos
+kairos setup
+# Provider: ollama
+# Base URL: http://localhost:11434
+# Model: llama3
+```
+
+### LM Studio
+
+```bash
+# Download from https://lmstudio.ai
+# Load a model in the app
+# Server starts on http://localhost:1234
+
+kairos setup
+# Provider: lmstudio
+# Base URL: http://localhost:1234/v1
+# Model: local
+```
 
 ## Cloud Providers
 
-| Provider | Default URL | Env Key |
-|----------|-------------|---------|
-| OpenAI | `https://api.openai.com/v1` | `OPENAI_API_KEY` |
-| Anthropic | `https://api.anthropic.com/v1` | `ANTHROPIC_API_KEY` |
-| Gemini | `https://generativelanguage.googleapis.com/v1beta` | `GOOGLE_API_KEY` |
-| Azure OpenAI | Custom endpoint | `AZURE_OPENAI_API_KEY` |
-| Groq | `https://api.groq.com/openai/v1` | `GROQ_API_KEY` |
-| Together AI | `https://api.together.xyz/v1` | `TOGETHER_API_KEY` |
-| DeepSeek | `https://api.deepseek.com/v1` | `DEEPSEEK_API_KEY` |
-| Mistral AI | `https://api.mistral.ai/v1` | `MISTRAL_API_KEY` |
-| Perplexity | `https://api.perplexity.ai` | `PERPLEXITY_API_KEY` |
-| Fireworks | `https://api.fireworks.ai/inference/v1` | `FIREWORKS_API_KEY` |
-| OpenRouter | `https://openrouter.ai/api/v1` | `OPENROUTER_API_KEY` |
-| xAI | `https://api.x.ai/v1` | `XAI_API_KEY` |
-| Cohere | `https://api.cohere.ai/v2` | `COHERE_API_KEY` |
-| Replicate | `https://api.replicate.com/v1` | `REPLICATE_API_TOKEN` |
+### OpenAI
+
+```bash
+export OPENAI_API_KEY=sk-...
+kairos setup
+# Provider: openai
+# Model: gpt-4o
+```
+
+### Anthropic
+
+```bash
+export ANTHROPIC_API_KEY=sk-ant-...
+kairos setup
+# Provider: anthropic
+# Model: claude-sonnet-4-20250514
+```
+
+### Groq
+
+```bash
+export GROQ_API_KEY=gsk_...
+kairos setup
+# Provider: groq
+# Model: llama-3.3-70b-versatile
+```
 
 ## Provider Commands
 
 ```bash
-kairos provider list           # List all providers
-kairos provider discover       # Auto-discover local providers
-kairos provider test <name>    # Test provider connection
+# List all providers and status
+kairos provider list
+
+# Discover local providers
+kairos provider discover
+
+# Test a provider connection
+kairos provider test anthropic
 ```
 
-## Configuration
+## Fallback Chain
+
+Kairos automatically falls back to other providers if the primary fails:
+
+1. Configured provider
+2. Other local providers (llama.cpp → Ollama → LM Studio)
+3. Cloud providers with API keys
+
+Set `fallbackEnabled: true` in config to enable.
+
+## Provider Management
 
 ```bash
-# Set provider via environment
-export KAIROS_LLM_PROVIDER=ollama
-export KAIROS_LLM_MODEL=llama3
+# Switch provider
+kairos --provider ollama
 
-# Or via CLI flags
-kairos -p "hello" --provider ollama --model llama3
+# Or via slash command
+/model llama3
 ```
+
+## Next Steps
+
+- [Configuration](configuration.md) — Provider-specific settings
+- [CLI Flags](cli-flags.md) — Provider CLI options

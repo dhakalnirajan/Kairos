@@ -38,10 +38,13 @@ const CODE_LINES = [
   "  ██████  ██████  ██████  ███████",
 ];
 
+const ANSI_BOLD = "\x1b[1m";
+const ANSI_RESET_BOLD = "\x1b[22m";
+
 function renderFrame(shinePos: number, active: boolean): string {
   const lines: string[] = [];
 
-  lines.push(`${renderColor(KAIROS_COLOR)}{bold}`);
+  lines.push(`${renderColor(KAIROS_COLOR)}${ANSI_BOLD}`);
 
   for (let i = 0; i < KAIROS_LINES.length; i++) {
     if (!active) {
@@ -66,7 +69,7 @@ function renderFrame(shinePos: number, active: boolean): string {
     lines.push(result);
   }
 
-  lines.push("{/bold}");
+  lines.push(`${ANSI_RESET_BOLD}`);
   lines.push(renderColor(CODE_COLOR));
 
   for (let i = 0; i < CODE_LINES.length; i++) {
@@ -139,7 +142,7 @@ export const MASCOT_DRAWING_ANSI = `\x1b[38;2;32;138;174m
 
 export function createMascotBox(
   parent: blessed.Widgets.Node,
-  _theme: Theme,
+  theme: Theme,
 ): {
   widget: blessed.Widgets.BoxElement;
   setContent(c: string): void;
@@ -155,9 +158,9 @@ export function createMascotBox(
     left: "center",
     width: "shrink",
     height: "shrink",
-    tags: true,
+    tags: false,
     content: MASCOT_BLOCK,
-    style: { bg: "transparent" },
+    style: { fg: theme.fg, bg: theme.bg },
   });
 
   let animationTimer: ReturnType<typeof setInterval> | null = null;

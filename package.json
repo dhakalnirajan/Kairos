@@ -1,6 +1,6 @@
 {
   "name": "kairos-code",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Terminal-native AI coding agent. Local-first, extensible, secure.",
   "type": "module",
   "bin": {
@@ -30,6 +30,7 @@
     "typescript": "^5.7.0"
   },
   "keywords": [
+    "kairos",
     "ai",
     "coding-agent",
     "terminal",

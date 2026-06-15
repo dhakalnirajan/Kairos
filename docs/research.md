@@ -1,38 +1,70 @@
-# Research
+# Research Engine
 
-Kairos is built on research in AI coding assistants and agentic systems.
+Kairos includes a research engine for web searches and information retrieval.
 
-## Key Concepts
+## Research Strategies
 
-### ReAct Pattern
-- Thought → Action → Observation loop
-- Tool dispatch based on LLM reasoning
-- Iterative refinement through feedback
+| Strategy | Engines | Use Case |
+|----------|---------|----------|
+| `quick` | DuckDuckGo | Fast, general queries |
+| `deep` | DDG + Bing + Brave | Thorough research |
+| `code` | GitHub + StackOverflow + npm | Code-related queries |
+| `academic` | arXiv + Wikipedia | Academic papers |
+| `comparative` | 5 engines | Comparison queries |
 
-### Memory Systems
-- SQLite with FTS5 for full-text search
-- BM25 ranking for relevance
-- Sliding window for conversation history
-- Persistent storage across sessions
+## Usage
 
-### Safety Architecture
-- 6-layer defense-in-depth pipeline
-- Input sanitization at entry point
-- Harm detection via pattern matching
-- Path confinement to workspace
-- Network security against SSRF
-- HITL approval for risky operations
-- Audit logging for accountability
+```bash
+# Quick research
+/research quick "React useEffect cleanup"
 
-### Provider Abstraction
-- Unified interface across 19 providers
-- Auto-discovery for local models
-- Fallback chain on failure
-- Streaming unification
+# Deep research
+/research deep "distributed consensus algorithms"
 
-## References
+# Code research
+/research code "bun sqlite best practices"
 
-- ReAct: Synergizing Reasoning and Acting in Language Models
-- Toolformer: Language Models Can Teach Themselves to Use Tools
-- Constitutional AI: Harmlessness from AI Feedback
-- Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks
+# Academic research
+/research academic "attention mechanism transformer"
+
+# Comparative research
+/research comparative "bun vs deno performance"
+```
+
+## Tool Usage
+
+```typescript
+// Via agent tool
+web_search({ query: "React hooks best practices", limit: 5 })
+
+// Via HTTP fetch
+http_fetch({ url: "https://example.com", format: "text" })
+```
+
+## Search Engines
+
+### DuckDuckGo (Default)
+- HTML scraping with fallback patterns
+- No API key required
+- Rate-limited
+
+### Brave Search
+- Requires API key
+- Better results for technical queries
+
+### GitHub Code Search
+- Searches public repositories
+- Finds code examples and implementations
+
+### StackOverflow
+- Q&A format results
+- Excellent for debugging questions
+
+### npm / PyPI
+- Package information
+- Version history
+
+## Next Steps
+
+- [Tools](tools.md) — Web-related tools
+- [Providers](providers.md) — Search configuration

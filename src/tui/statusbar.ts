@@ -33,6 +33,7 @@ export function createStatusBar(
     style: {
       fg: theme.fg,
       bg: theme.surface,
+      bold: false,
     },
   });
 

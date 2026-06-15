@@ -1,172 +1,129 @@
 # Slash Commands
 
-Kairos provides 110+ slash commands organized by category.
+Kairos provides 68+ slash commands accessible in the TUI and web interface.
 
-## General
+## Session Management
 
 | Command | Description |
 |---------|-------------|
-| `/help` | Show all commands |
-| `/clear` | Clear chat |
-| `/quit` | Exit Kairos |
-| `/exit` | Exit Kairos |
+| `/help` | Show all available commands |
+| `/clear` | Clear the chat |
+| `/quit` or `/exit` | Exit Kairos |
 | `/status` | Show system status |
-| `/version` | Show version |
-| `/theme` | Switch theme |
+| `/version` | Show version info |
+| `/cost` | Show token usage and estimated cost |
+| `/model <name>` | Switch LLM model |
+| `/mode <mode>` | Switch agent mode |
+| `/theme <name>` | Switch TUI theme |
+| `/export` | Export session (md/html/json) |
 
 ## Memory
 
 | Command | Description |
 |---------|-------------|
-| `/dream` | Consolidate memory |
-| `/compact` | Summarize context |
-| `/recall` | Search memory |
+| `/recall <query>` | Search memory for matching entries |
+| `/remember <fact>` | Store a fact in memory |
 | `/forget` | Clear memory |
-| `/rules` | Show learned rules |
-| `/alias` | Manage aliases |
-| `/knowledge` | Knowledge graph |
+| `/rules` | Show learned preference rules |
+| `/dream` | Consolidate memory (extract key facts) |
+| `/compact` | Summarize and compact context |
+| `/compress` | Compress old scratch entries |
 
-## Sessions
-
-| Command | Description |
-|---------|-------------|
-| `/sessions` | List sessions |
-| `/export` | Export session |
-| `/undo` | Revert last turn |
-| `/thread` | Switch thread |
-| `/replay` | Replay session |
-| `/handoff` | Session handoff |
-
-## Agent
+## Code Analysis
 
 | Command | Description |
 |---------|-------------|
-| `/mode` | Switch agent mode |
-| `/model` | Switch LLM model |
-| `/persona` | Switch persona |
-| `/focus` | Focus mode |
-| `/tasks` | Show tasks |
-| `/orchestrate` | Orchestrate agents |
-| `/campaign` | Task campaign |
-
-## Skills
-
-| Command | Description |
-|---------|-------------|
-| `/skill` | Learn skill |
-| `/workflow` | Run workflow |
-| `/marketplace` | Skill marketplace |
-| `/learn` | Learn from correction |
-| `/achievements` | Show achievements |
+| `/review` | Review code for issues |
+| `/test` | Run tests |
+| `/lint` | Run linter |
+| `/format` | Format code |
+| `/explain` | Explain code |
+| `/fix` | Auto-fix issues |
+| `/optimize` | Suggest optimizations |
+| `/refactor` | Suggest refactors |
+| `/security` | Security scan |
+| `/cleanup` | Dead code detection |
 
 ## Tools
 
 | Command | Description |
 |---------|-------------|
-| `/http` | HTTP client |
-| `/health` | Health check |
-| `/bridge` | Context bridge |
-| `/resources` | Resource monitor |
-| `/index` | Search index |
-| `/escalate` | Escalate failure |
-| `/self-update` | Self update |
+| `/diff` | Show file diff |
+| `/git <action>` | Git operations |
+| `/commit` | Create git commit |
+| `/branch <name>` | Create/switch branch |
+| `/merge <branch>` | Merge branch |
+| `/stash` | Stash changes |
+| `/log` | Show git log |
 
-## Office
-
-| Command | Description |
-|---------|-------------|
-| `/cal` | Calendar |
-| `/remind` | Set reminder |
-| `/doc` | Word processor |
-| `/sheet` | Spreadsheet |
-| `/slide` | Presentation |
-| `/pdf` | PDF tools |
-| `/mail` | Email client |
-| `/db` | Database tools |
-| `/browser` | Browser tools |
-| `/clip` | Clipboard |
-
-## System
+## Documentation
 
 | Command | Description |
 |---------|-------------|
-| `/mac` | macOS automation |
-| `/service` | Linux services |
-| `/cron` | Cron jobs |
-| `/desktop` | Desktop management |
-| `/device` | Device pairing |
-| `/term` | Terminal profile |
-| `/sys` | System power |
-| `/git-hooks` | Git hooks |
-
-## Code
-
-| Command | Description |
-|---------|-------------|
-| `/complete` | Code completion |
-| `/review` | Code review |
-| `/test` | Test generation |
-| `/debug` | Debugging |
-| `/ci` | CI/CD tools |
-| `/docs` | Documentation |
-| `/deps` | Dependency graph |
-| `/cleanup` | Dead code detection |
-| `/bench` | Benchmarking |
-
-## Strategy
-
-| Command | Description |
-|---------|-------------|
-| `/stakeholder` | Stakeholder map |
-| `/relation` | Relationship logger |
-| `/tone` | Tone analysis |
-| `/negotiate` | Negotiation |
-| `/diplo` | Diplomatic language |
-| `/conflict` | Conflict advisor |
-| `/coalition` | Coalition builder |
-| `/risk` | Political risk |
-| `/network` | Network strategy |
-| `/trust` | Trust tracking |
-| `/culture` | Cross-cultural advice |
-| `/influence` | Influence planning |
-| `/treaty` | Treaty drafting |
-
-## Comms
-
-| Command | Description |
-|---------|-------------|
-| `/simulate` | Conversation simulation |
-| `/statement` | Public statements |
-| `/crisis` | Crisis comms |
-| `/frame` | Media framing |
-| `/apology` | Apology drafting |
-| `/boundary` | Boundary setting |
-| `/empathy` | Empathy prompts |
-
-## Values
-
-| Command | Description |
-|---------|-------------|
-| `/social-capital` | Social capital |
-| `/values` | Value alignment |
-| `/loyalty` | Loyalty risk |
-| `/reconcile` | Reconciliation |
-| `/misinfo` | Misinformation detection |
-| `/ethics` | Ethical checks |
-
-## Advanced
-
-| Command | Description |
-|---------|-------------|
-| `/vault` | Encrypted vault |
-| `/team` | Team collaboration |
-| `/branch-diff` | Compare branches |
-| `/advisories` | Security advisories |
-| `/migrate` | DB migration |
+| `/docs-sync` | Sync documentation |
+| `/adr` | Architecture Decision Records |
 | `/changelog` | Generate changelog |
-| `/bootstrap` | Environment setup |
-| `/translate-docs` | Translate docs |
-| `/accessibility` | Accessibility mode |
-| `/lsp` | LSP bridge |
-| `/dap` | DAP bridge |
-| `/widget` | Custom widget |
+| `/meeting-notes` | Meeting notes integration |
+
+## Performance
+
+| Command | Description |
+|---------|-------------|
+| `/bench` | Run benchmarks |
+| `/metrics` | Show quality metrics |
+| `/query-opt` | Query optimization analysis |
+
+## Security
+
+| Command | Description |
+|---------|-------------|
+| `/security-scan` | Scan for vulnerabilities |
+| `/advisories` | Check security advisories |
+| `/vault` | Encrypted secret storage |
+| `/license-check` | Check license compatibility |
+| `/supply-chain` | Supply chain audit |
+
+## Project Management
+
+| Command | Description |
+|---------|-------------|
+| `/tasks` | List tasks |
+| `/task add <desc>` | Add a task |
+| `/workflow` | Workflow automation |
+| `/campaign` | Refactoring campaigns |
+
+## Development
+
+| Command | Description |
+|---------|-------------|
+| `/bootstrap` | Generate project scaffolding |
+| `/migrate` | Database migration |
+| `/generate-api-docs` | Generate API documentation |
+| `/transpile` | Code transpilation |
+| `/modernise` | Legacy code modernisation |
+
+## Meta
+
+| Command | Description |
+|---------|-------------|
+| `/persona <name>` | Switch agent persona |
+| `/focus` | Enter focus mode |
+| `/handoff` | Session handoff |
+| `/branch-diff` | Compare session branches |
+
+## Usage Examples
+
+```bash
+# In TUI
+> /review src/main.ts
+> /test --watch
+> /commit -m "feat: add new feature"
+> /recall authentication
+> /persona auditor
+> /bench myFunction
+```
+
+## Next Steps
+
+- [Tools](tools.md) — 68 built-in tools
+- [Safety](safety.md) — Safety pipeline

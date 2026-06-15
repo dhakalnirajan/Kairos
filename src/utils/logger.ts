@@ -1,4 +1,13 @@
-import { join } from 'path';
+import {
+  appendFileSync,
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  renameSync,
+  statSync,
+  unlinkSync,
+} from "fs";
+import { basename, dirname, join } from "path";
 
 export enum LogLevel {
   DEBUG = 0,
@@ -8,16 +17,16 @@ export enum LogLevel {
 }
 
 const ANSI_COLORS = {
-  reset: '\x1b[0m',
-  red: '\x1b[31m',
-  green: '\x1b[32m',
-  yellow: '\x1b[33m',
-  blue: '\x1b[34m',
-  magenta: '\x1b[35m',
-  cyan: '\x1b[36m',
-  white: '\x1b[37m',
-  gray: '\x1b[90m',
-  bold: '\x1b[1m',
+  reset: "\x1b[0m",
+  red: "\x1b[31m",
+  green: "\x1b[32m",
+  yellow: "\x1b[33m",
+  blue: "\x1b[34m",
+  magenta: "\x1b[35m",
+  cyan: "\x1b[36m",
+  white: "\x1b[37m",
+  gray: "\x1b[90m",
+  bold: "\x1b[1m",
 } as const;
 
 const LOG_LEVEL_COLORS: Record<LogLevel, string> = {
@@ -28,10 +37,10 @@ const LOG_LEVEL_COLORS: Record<LogLevel, string> = {
 };
 
 const LOG_LEVEL_LABELS: Record<LogLevel, string> = {
-  [LogLevel.DEBUG]: 'DEBUG',
-  [LogLevel.INFO]: 'INFO',
-  [LogLevel.WARN]: 'WARN',
-  [LogLevel.ERROR]: 'ERROR',
+  [LogLevel.DEBUG]: "DEBUG",
+  [LogLevel.INFO]: "INFO",
+  [LogLevel.WARN]: "WARN",
+  [LogLevel.ERROR]: "ERROR",
 };
 
 export class Logger {
@@ -40,6 +49,7 @@ export class Logger {
   private useColors: boolean = true;
   private logFile: string | null = null;
   private logRotationSize: number = 10 * 1024 * 1024;
+  private maxBackups: number = 5;
 
   private constructor() {}
 
@@ -58,58 +68,103 @@ export class Logger {
     this.useColors = enabled;
   }
 
-  enableFileLogging(logDir: string, rotationSize?: number): void {
-    this.logFile = join(logDir, 'kairos.log');
+  enableFileLogging(
+    logDir: string,
+    rotationSize?: number,
+    maxBackups = 5,
+  ): void {
+    mkdirSync(logDir, { recursive: true });
+    this.logFile = join(logDir, "kairos.log");
+    this.maxBackups = maxBackups;
     if (rotationSize !== undefined) {
       this.logRotationSize = rotationSize;
     }
   }
 
-  private formatMessage(level: LogLevel, message: string, context?: string): string {
+  private formatMessage(
+    level: LogLevel,
+    message: string,
+    context?: string,
+  ): string {
     const timestamp = new Date().toISOString();
     const levelLabel = LOG_LEVEL_LABELS[level];
-    
+
     let formatted: string;
     if (context) {
       formatted = `[${timestamp}] [${levelLabel}] [${context}] ${message}`;
     } else {
       formatted = `[${timestamp}] [${levelLabel}] ${message}`;
     }
-    
+
     if (this.useColors) {
       const color = LOG_LEVEL_COLORS[level];
       return `${color}${formatted}${ANSI_COLORS.reset}`;
     }
-    
+
     return formatted;
   }
 
   private async writeToFile(message: string): Promise<void> {
     if (!this.logFile) return;
-    
+
     try {
-      const file = Bun.file(this.logFile);
-      let content = '';
-      
-      if (await file.exists()) {
-        content = await file.text();
-        
-        if (content.length > this.logRotationSize) {
-          const rotatedPath = `${this.logFile}.${Date.now()}`;
-          await Bun.write(rotatedPath, content);
-          content = '';
+      const logDirectory = dirname(this.logFile);
+      mkdirSync(logDirectory, { recursive: true });
+
+      if (existsSync(this.logFile)) {
+        const stats = statSync(this.logFile);
+        if (stats.size > this.logRotationSize) {
+          this.rotateLogFile();
         }
       }
-      
-      await Bun.write(this.logFile, content + message + '\n');
+
+      appendFileSync(this.logFile, `${message}\n`, { encoding: "utf8" });
     } catch {
       // Silently fail if we can't write to log file
     }
   }
 
-  private async log(level: LogLevel, message: string, context?: string): Promise<void> {
+  private rotateLogFile(): void {
+    if (!this.logFile) return;
+
+    try {
+      const rotatedPath = `${this.logFile}.${Date.now()}`;
+      renameSync(this.logFile, rotatedPath);
+      this.cleanupOldBackups();
+    } catch {
+      // Rotation failed, continue without interrupting logging
+    }
+  }
+
+  private cleanupOldBackups(): void {
+    if (!this.logFile) return;
+
+    try {
+      const logDirectory = dirname(this.logFile);
+      const logBase = basename(this.logFile);
+      const backups = readdirSync(logDirectory)
+        .filter((entry) => entry.startsWith(`${logBase}.`))
+        .sort();
+
+      const obsolete = backups.slice(
+        0,
+        Math.max(0, backups.length - this.maxBackups),
+      );
+      for (const backup of obsolete) {
+        unlinkSync(join(logDirectory, backup));
+      }
+    } catch {
+      // Cleanup errors should not affect logging
+    }
+  }
+
+  private async log(
+    level: LogLevel,
+    message: string,
+    context?: string,
+  ): Promise<void> {
     if (level < this.level) return;
-    
+
     const formatted = this.formatMessage(level, message, context);
     console.log(formatted);
     await this.writeToFile(formatted);

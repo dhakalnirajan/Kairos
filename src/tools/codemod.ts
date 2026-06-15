@@ -1,5 +1,6 @@
 import { readFileSync } from 'fs';
-import { ASTNavigator, type ASTNode, type CodeSymbol } from './ast.ts';
+import { isAbsolute, join } from "path";
+import { ASTNavigator, type CodeSymbol } from "./ast.ts";
 import { computeDiff, formatDiff, type DiffResult } from './diff.ts';
 
 export interface TransformOperation {
@@ -27,7 +28,8 @@ export class CodemodEngine {
   }
 
   async applyTransform(file: string, operation: TransformOperation): Promise<CodemodResult> {
-    const content = readFileSync(file, 'utf-8');
+    const normalizedPath = isAbsolute(file) ? file : join(process.cwd(), file);
+    const content = readFileSync(normalizedPath, "utf-8");
     let newContent: string;
 
     switch (operation.type) {

@@ -1,77 +1,98 @@
-# CLI Flags
+# CLI Flags Reference
 
-## Usage
+## General
 
-```bash
-kairos [subcommand] [flags]
-```
+| Flag | Short | Description |
+|------|-------|-------------|
+| `--help` | `-h` | Show help |
+| `--version` | | Show version |
 
-## Subcommands
+## Execution
 
-| Command | Description |
-|---------|-------------|
-| `kairos` | Start TUI mode |
-| `kairos setup` | First-run wizard |
-| `kairos web` | Web interface |
-| `kairos daemon` | Background daemon |
-| `kairos provider` | Provider management |
-| `kairos auth` | API key management |
-| `kairos session` | Session management |
+| Flag | Short | Description |
+|------|-------|-------------|
+| `--print <query>` | `-p` | Run headless one-shot query |
+| `--interactive` | `-i` | Interactive CLI mode |
+| `--continue` | `-c` | Continue last session |
+| `--no-tui` | | Skip TUI, use plain readline REPL |
 
-## Flags
+## Model Configuration
+
+| Flag | Description | Default |
+|------|-------------|---------|
+| `--model <name>` | LLM model name | Config default |
+| `--provider <name>` | LLM provider | Config default |
+| `--max-tokens <n>` | Max tokens per response | 8192 |
+| `--temperature <n>` | Sampling temperature | 0.7 |
+
+## Mode
 
 | Flag | Description |
 |------|-------------|
-| `-p, --prompt <query>` | Run headless query |
-| `--provider <name>` | Set LLM provider |
-| `--model <name>` | Set model name |
-| `--mode <mode>` | Set agent mode |
-| `--theme <theme>` | Set TUI theme |
-| `--port <port>` | Set web/daemon port |
-| `-i, --interactive` | Interactive CLI mode |
-| `--daemon` | Start as daemon |
-| `--help` | Show help |
-| `--version` | Show version |
+| `--mode <mode>` | Agent mode (NORMAL, PLAN, AUTO, YOLO, HEADLESS) |
+| `--compose` | Use 8-step compose pipeline |
+| `--yolo` | Skip all confirmations (alias for AUTO mode) |
 
-## Modes
+## Safety
 
-| Mode | Description |
+| Flag | Description |
 |------|-------------|
-| `NORMAL` | Default with HITL |
-| `PLAN` | Read-only analysis |
-| `AUTO` | Auto-approve safe tools |
-| `YOLO` | Bypass all safety |
-| `HEADLESS` | No TUI |
-| `COMPOSE` | Autonomous pipeline |
-| `SWARM` | Parallel execution |
-| `DREAM` | Memory consolidation |
-| `UNDERCOVER` | Strip AI fingerprints |
+| `--permission-mode <mode>` | Permission mode |
+| `--dangerously-skip-permissions` | Skip all safety checks (DANGEROUS) |
+
+## Server
+
+| Flag | Description | Default |
+|------|-------------|---------|
+| `--web` | Start web interface | Port 3333 |
+| `--port <n>` | Server port | 3333 |
+| `--host <addr>` | Bind host | 0.0.0.0 |
+| `--daemon` | Start as background daemon | |
+| `--serve` | Start IDE bridge server | |
+
+## Display
+
+| Flag | Description |
+|------|-------------|
+| `--verbose` | Verbose output |
+| `--debug` | Debug output |
+| `--no-color` | Disable colors |
+| `--no-stream` | Disable streaming |
+| `--output-format <fmt>` | Output format (text, json, markdown) |
+
+## Setup
+
+| Flag | Description |
+|------|-------------|
+| `--quick` | Quick setup (skip prompts) |
+| `--reset` | Reset config to defaults |
 
 ## Examples
 
 ```bash
-# Headless query
-kairos -p "Explain this code"
+# Headless query with specific model
+kairos -p "Explain this code" --model gpt-4o
 
-# Use specific provider
-kairos -p "hello" --provider ollama --model llama3
+# Start with auto-approve mode
+kairos --mode AUTO
 
-# Start web interface
+# Web interface on custom port
 kairos web --port 8080
 
-# List providers
-kairos provider list
+# Daemon mode
+kairos daemon --port 7777
 
-# Test provider
-kairos provider test llamacpp
+# Quick setup
+kairos setup --quick
+
+# Continue last session in plan mode
+kairos --continue --mode PLAN
+
+# Plain REPL (no TUI)
+kairos --no-tui
 ```
 
-## Environment Variables
+## Next Steps
 
-```bash
-KAIROS_LLM_PROVIDER=ollama
-KAIROS_LLM_MODEL=llama3
-KAIROS_LLM_API_KEY=sk-...
-KAIROS_SAFETY_ENABLED=true
-KAIROS_DAEMON_PORT=7777
-```
+- [Slash Commands](slash-commands.md) — In-session commands
+- [Configuration](configuration.md) — Config file equivalents

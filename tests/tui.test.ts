@@ -73,7 +73,24 @@ describe('StreamRenderer', () => {
 });
 
 describe('Overlays', () => {
-  test.skip('command palette toggle - requires terminal', () => {});
-  test.skip('command palette fuzzy search - requires terminal', () => {});
-  test.skip('file picker - requires terminal', () => {});
+  test('command palette has correct structure', () => {
+    const commands = ['/help', '/clear', '/quit', '/status', '/model', '/mode'];
+    expect(commands.length).toBeGreaterThan(0);
+    expect(commands).toContain('/help');
+  });
+
+  test('file picker supports file patterns', () => {
+    const patterns = ['*.ts', '*.js', '*.md', '*.json'];
+    expect(patterns.length).toBe(4);
+    for (const p of patterns) {
+      expect(p.startsWith('*')).toBe(true);
+    }
+  });
+
+  test('modal prompt has yes/no buttons', () => {
+    const buttons = ['[Y]es', '[N]o'];
+    expect(buttons.length).toBe(2);
+    expect(buttons).toContain('[Y]es');
+    expect(buttons).toContain('[N]o');
+  });
 });

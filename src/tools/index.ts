@@ -5,6 +5,10 @@ export { parallelTool, buildExecutionPlan, validateDependencies } from './parall
 export type { ToolNode, ExecutionPlan } from './parallel.ts';
 export { personaTool, personaManager, PersonaManager } from './persona.ts';
 export type { PersonaProfile } from './persona.ts';
+export { aliasTool } from "./alias.ts";
+export { knowledgeTool } from "./knowledge.ts";
+export { metricsTool } from "./metrics.ts";
+export { undoTool } from "./undo.ts";
 export { workflowTool, parseSimpleYaml, evaluateCondition, resolveExecutionOrder, renderWorkflowGraph } from './workflow.ts';
 export type { WorkflowStep, WorkflowCondition, WorkflowDefinition } from './workflow.ts';
 export { semanticTool, semanticIndex, SemanticIndex } from './semantic.ts';

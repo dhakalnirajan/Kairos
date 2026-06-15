@@ -1,5 +1,13 @@
 import { homedir } from 'os';
-import { join, resolve, normalize } from 'path';
+import {
+  join,
+  resolve,
+  normalize,
+  relative,
+  isAbsolute as pathIsAbsolute,
+  sep,
+} from "path";
+import { mkdirSync, realpathSync } from "fs";
 
 const IS_WINDOWS = process.platform === 'win32';
 
@@ -60,9 +68,11 @@ export function getTempDir(): string {
 
 export async function ensureDir(dir: string): Promise<void> {
   try {
-    const file = Bun.file(join(dir, '.gitkeep'));
+    mkdirSync(dir, { recursive: true });
+    const gitkeepPath = join(dir, ".gitkeep");
+    const file = Bun.file(gitkeepPath);
     if (!await file.exists()) {
-      await Bun.write(join(dir, '.gitkeep'), '');
+      await Bun.write(gitkeepPath, "");
     }
   } catch {
     // Directory might already exist or we don't have permissions
@@ -88,63 +98,39 @@ export async function ensureAllDirs(): Promise<void> {
 
 export function resolvePath(path: string): string {
   if (path.startsWith('~')) {
-    return join(getHomeDir(), path.slice(1));
+    return resolve(join(getHomeDir(), path.slice(1)));
   }
   if (path.startsWith('$HOME')) {
-    return join(getHomeDir(), path.slice(5));
+    return resolve(join(getHomeDir(), path.slice(5)));
   }
-  return path;
+  return resolve(path);
 }
 
 export function normalizePath(path: string): string {
-  return path.replace(/\//g, IS_WINDOWS ? '\\' : '/');
+  return normalize(path).replace(/\//g, IS_WINDOWS ? "\\" : "/");
 }
 
 export function isAbsolute(path: string): boolean {
-  if (IS_WINDOWS) {
-    return /^[a-zA-Z]:\\/.test(path) || /^\\\\/.test(path);
-  }
-  return path.startsWith('/');
+  return pathIsAbsolute(path);
 }
 
 export function getRelativePath(from: string, to: string): string {
-  const fromParts = normalizePath(from).split(IS_WINDOWS ? '\\' : '/');
-  const toParts = normalizePath(to).split(IS_WINDOWS ? '\\' : '/');
-  
-  let commonLength = 0;
-  while (
-    commonLength < fromParts.length &&
-    commonLength < toParts.length &&
-    fromParts[commonLength] === toParts[commonLength]
-  ) {
-    commonLength++;
-  }
-  
-  const upCount = fromParts.length - commonLength;
-  const downParts = toParts.slice(commonLength);
-  
-  const parts = [
-    ...Array(upCount).fill('..'),
-    ...downParts,
-  ];
-  
-  return parts.join(IS_WINDOWS ? '\\' : '/');
+  return normalizePath(relative(from, to));
 }
 
-export async function resolveSymlink(path: string): Promise<string> {
+export function resolveSymlink(path: string): string {
   try {
-    const file = Bun.file(path);
-    if (await file.exists()) {
-      return normalize(resolve(path));
-    }
-  } catch {}
-  return normalize(resolve(path));
+    return normalize(realpathSync(path));
+  } catch {
+    return normalize(resolve(path));
+  }
 }
 
 export function isWithinWorkspace(filePath: string, workspaceRoot: string): boolean {
-  const normalizedRoot = normalize(workspaceRoot);
+  const normalizedRoot = normalize(resolve(workspaceRoot));
   const normalizedPath = normalize(resolve(filePath));
-  return normalizedPath.startsWith(normalizedRoot);
+  const rel = relative(normalizedRoot, normalizedPath);
+  return rel === "" || (!rel.startsWith(".." + sep) && !pathIsAbsolute(rel));
 }
 
 export function assertWithinWorkspace(filePath: string, workspaceRoot: string): void {
@@ -158,8 +144,70 @@ export function normalizeLineEndings(content: string): string {
 }
 
 export function toNativePath(path: string): string {
-  if (IS_WINDOWS) {
-    return path.replace(/\//g, '\\');
+  return normalizePath(path);
+}
+
+export function normalizeEol(content: string, eol = "\n"): string {
+  return normalizeLineEndings(content).replace(/\n/g, eol);
+}
+
+export async function readUtf8File(filePath: string): Promise<string> {
+  const file = Bun.file(filePath);
+  if (!(await file.exists())) {
+    throw new Error(`File not found: ${filePath}`);
   }
-  return path.replace(/\\/g, '/');
+  return normalizeLineEndings(await file.text());
+}
+
+export async function writeUtf8File(
+  filePath: string,
+  content: string,
+): Promise<number> {
+  const encoded = new TextEncoder().encode(normalizeLineEndings(content));
+  return await Bun.write(filePath, encoded);
+}
+
+export async function writeUtf8FileNormalized(
+  filePath: string,
+  content: string,
+  eol = "\n",
+): Promise<number> {
+  const encoded = new TextEncoder().encode(normalizeEol(content, eol));
+  return await Bun.write(filePath, encoded);
+}
+
+export class PathResolver {
+  private workspaceRoot: string;
+
+  constructor(workspaceRoot: string) {
+    this.workspaceRoot = normalize(resolve(workspaceRoot));
+  }
+
+  resolvePath(path: string): string {
+    if (path.startsWith("~")) {
+      path = join(getHomeDir(), path.slice(1));
+    } else if (path.startsWith("$HOME")) {
+      path = join(getHomeDir(), path.slice(5));
+    } else if (!pathIsAbsolute(path)) {
+      path = join(this.workspaceRoot, path);
+    }
+
+    const resolved = resolveSymlink(path);
+    if (!this.isWithinWorkspace(resolved)) {
+      throw new Error(
+        `Path ${path} is outside workspace root ${this.workspaceRoot}`,
+      );
+    }
+    return resolved;
+  }
+
+  normalizePath(path: string): string {
+    return normalize(path).replace(/\//g, IS_WINDOWS ? "\\" : "/");
+  }
+
+  isWithinWorkspace(path: string): boolean {
+    const normalizedPath = normalize(resolve(path));
+    const rel = relative(this.workspaceRoot, normalizedPath);
+    return rel === "" || (!rel.startsWith(".." + sep) && !pathIsAbsolute(rel));
+  }
 }
