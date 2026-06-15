@@ -7,16 +7,23 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: {
-          DEFAULT: '#208AAE',
-          light: '#4ECDC4',
-          dark: '#1A6B85',
+        kairos: {
+          bg: '#0f172a',
+          surface: '#1e293b',
+          border: '#334155',
+          primary: '#38bdf8',
+          secondary: '#94a3b8',
+          accent: '#22d3ee',
+          success: '#4ade80',
+          error: '#f87171',
+          warning: '#fbbf24',
+          text: '#e2e8f0',
+          muted: '#64748b',
         },
-        dark: {
-          DEFAULT: '#1A1A2E',
-          surface: '#16213E',
-          border: '#3A3A5C',
-        },
+      },
+      fontFamily: {
+        sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Noto Sans', 'Helvetica', 'Arial', 'sans-serif'],
+        mono: ['SF Mono', 'Fira Code', 'Fira Mono', 'Menlo', 'Consolas', 'monospace'],
       },
     },
   },

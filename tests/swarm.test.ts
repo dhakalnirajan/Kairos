@@ -9,7 +9,7 @@ import { getDbPath } from '../src/utils/paths.ts';
 
 function createTestConfig(): KairosConfigOutput {
   return {
-    version: '0.1.0',
+    version: '0.1.1',
     llm: { provider: 'llamacpp', model: 'test', baseUrl: 'http://localhost:8080', maxTokens: 1024, temperature: 0.7 },
     tools: { enabled: [], disabled: [], custom: [], confirmBeforeExecute: false, maxConcurrent: 4 },
     safety: { enabled: false, allowedRiskLevels: ['read', 'write', 'execute', 'network'], blockedCommands: [], blockedPaths: [], autoApprove: true, requireConfirmationFor: [] },

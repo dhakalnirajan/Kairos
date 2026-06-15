@@ -1,14 +1,15 @@
 # KAIROS CODE
 
+![Kairos Logo](/img/logo.png)
+
+[![Deploy Documentation](https://github.com/dhakalnirajan/Kairos/actions/workflows/deploy-docs.yml/badge.svg)](https://github.com/dhakalnirajan/Kairos/actions/workflows/deploy-docs.yml)
+
+[![Release](https://github.com/dhakalnirajan/Kairos/actions/workflows/release.yml/badge.svg)](https://github.com/dhakalnirajan/Kairos/actions/workflows/release.yml)
+
+[![CI](https://github.com/dhakalnirajan/Kairos/actions/workflows/ci.yml/badge.svg)](https://github.com/dhakalnirajan/Kairos/actions/workflows/ci.yml)
+
 > Terminal-native AI coding agent. Local-first, extensible, secure.
 
-```text
-██   ██  █████  ██ ██████   ██████  ███████
-██  ██  ██   ██ ██ ██   ██ ██    ██ ██
-█████   ███████ ██ ██████  ██    ██ ███████
-██  ██  ██   ██ ██ ██   ██ ██    ██      ██
-██   ██ ██   ██ ██ ██   ██  ██████  ███████
-```
 
 ## What is Kairos Code?
 
@@ -37,8 +38,8 @@ Kairos Code is a terminal-native AI coding agent that runs locally with your cho
 ### Install
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/kairos-code.git
-cd kairos-code
+git clone https://github.com/dhakalnirajan/Kairos.git
+cd Kairos
 bun install
 ```
 

@@ -474,7 +474,7 @@ export class TUI {
           this.chatPane.append(
             "\n{bold}{#208AAE-fg}=== System Status ==={/}{/bold}\n",
           );
-          this.chatPane.append(`{bold}Version:{/bold} 0.1.0\n`);
+          this.chatPane.append(`{bold}Version:{/bold} 0.1.1\n`);
           this.chatPane.append(`{bold}Platform:{/bold} ${process.platform}\n`);
           this.chatPane.append(
             `{bold}Uptime:{/bold} ${Math.floor(process.uptime())}s\n`,

@@ -6,7 +6,7 @@ describe('Config Loader', () => {
   test('loadConfig returns valid config', async () => {
     const config = await loadConfig();
     expect(config).toBeDefined();
-    expect(config.version).toBe('0.1.0');
+    expect(config.version).toBe('0.1.1');
     expect(config.llm).toBeDefined();
     expect(config.safety).toBeDefined();
   });
@@ -38,7 +38,7 @@ describe('Config Loader', () => {
 
   test('resetConfig restores defaults', async () => {
     const config = await resetConfig();
-    expect(config.version).toBe('0.1.0');
+    expect(config.version).toBe('0.1.1');
     expect(config.llm.provider).toBe('anthropic');
   });
 

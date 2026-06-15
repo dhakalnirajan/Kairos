@@ -4,7 +4,7 @@ import type { KairosConfigOutput } from '../src/config/schema.ts';
 import { join } from 'path';
 
 const defaultConfig: KairosConfigOutput = {
-  version: '0.1.0',
+  version: '0.1.1',
   llm: {
     provider: 'anthropic',
     model: 'claude-sonnet-4-20250514',

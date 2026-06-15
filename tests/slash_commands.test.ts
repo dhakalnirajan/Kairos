@@ -20,7 +20,7 @@ async function testSlashCommand(command: string, registry: ToolRegistry, memory:
     case '/status':
       return { success: true, output: 'Status OK' };
     case '/version':
-      return { success: true, output: 'v0.1.0' };
+      return { success: true, output: 'v0.1.1' };
     case '/model':
       return { success: true, output: `Model: ${args[0] || 'current'}` };
     case '/mode':
