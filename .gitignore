@@ -10,3 +10,4 @@ kairos.db
 .DS_Store
 Thumbs.db
 _test_*/
+.kairos/
