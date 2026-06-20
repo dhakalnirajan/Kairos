@@ -11,3 +11,7 @@ kairos.db
 Thumbs.db
 _test_*/
 .kairos/
+.mimocode/
+*.csv
+*-summary.md
+qa-summary.md
