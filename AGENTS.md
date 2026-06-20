@@ -17,6 +17,27 @@ bun run web              # Start web interface
 
 **Verification order:** `bun run typecheck` → `bun test` → `bun run build`. CI runs all three.
 
+## Engineering Skills
+
+This project includes production-grade engineering skills in `skills/` directory:
+
+| Skill | Purpose | When to Use |
+|-------|---------|-------------|
+| `tdd` | Test-driven development | Implementing logic, fixing bugs |
+| `code-review` | Multi-axis code review | Before merging any change |
+| `debugging` | Systematic root-cause debugging | When tests fail or behavior is unexpected |
+| `security` | Security hardening | Handling user input, auth, external integrations |
+| `performance` | Performance optimization | When performance requirements exist |
+
+### Usage
+
+Skills are activated automatically based on context, or can be invoked directly:
+- Implementing code → `tdd` skill activates
+- Reviewing code → `code-review` skill activates
+- Something broken → `debugging` skill activates
+- Security concerns → `security` skill activates
+- Performance issues → `performance` skill activates
+
 ## Architecture
 
 ```
