@@ -10,6 +10,7 @@
 
 > Terminal-native AI coding agent. Local-first, extensible, secure.
 
+**Version:** 0.1.0
 
 ## What is Kairos Code?
 
@@ -17,9 +18,10 @@ Kairos Code is a terminal-native AI coding agent that runs locally with your cho
 
 **Key features:**
 - **19 LLM providers** with auto-discovery (llama.cpp, Ollama, LM Studio, OpenAI, Anthropic, Gemini, and more)
+- **210 verified features** across all categories
+- **86 built-in tools** for file operations, shell commands, web access, memory, security, and more
 - Interactive TUI with split panes, streaming, command palette
 - Web interface for browser/SSH tunnel access
-- 10+ built-in tools (read, write, edit, bash, git, search, memory, etc.)
 - 6-layer safety pipeline for all tool calls
 - KAIROS.md agentic instructions (like CLAUDE.md)
 - Swarm mode for parallel task execution

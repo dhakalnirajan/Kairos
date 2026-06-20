@@ -1,0 +1,211 @@
+Feature ID,Feature Name,Category,User Story,Expected Behaviour,Status,Test Date,Errors Found,Fix Applied,Post-Fix Status
+F001,/quit,Slash Command,"As a user, I want to exit Kairos so that I can close the application",TUI closes and process exits,Passed,2026-06-20,,,Passed
+F002,/exit,Slash Command,"As a user, I want to exit Kairos so that I can close the application",TUI closes and process exits,Passed,2026-06-20,,,Passed
+F003,/clear,Slash Command,"As a user, I want to clear the chat pane so that I can start fresh",Chat pane content is cleared,Passed,2026-06-20,,,Passed
+F004,/help,Slash Command,"As a user, I want to see all available commands so that I know what I can do",Displays categorized list of all commands,Passed,2026-06-20,,,Passed
+F005,/version,Slash Command,"As a user, I want to see the version so that I know what I'm running",Shows version 0.1.1 and feature count,Passed,2026-06-20,,,Passed
+F006,/status,Slash Command,"As a user, I want to see system status so that I know the health",Shows version/platform/uptime/memory/status,Passed,2026-06-20,,,Passed
+F007,/model,Slash Command,"As a user, I want to switch models so that I can use different LLMs",Displays current model or switches to specified model,Passed,2026-06-20,,,Passed
+F008,/mode,Slash Command,"As a user, I want to switch agent modes so that I can change behavior",Displays current mode or switches to specified mode,Passed,2026-06-20,,,Passed
+F009,/theme,Slash Command,"As a user, I want to switch themes so that I can customize appearance",Switches to specified theme (default/dark/light/monokai/dracula),Passed,2026-06-20,,,Passed
+F010,/dream,Slash Command,"As a user, I want to consolidate memory so that I can organize facts",Runs memory consolidation process,Passed,2026-06-20,,,Passed
+F011,/compact,Slash Command,"As a user, I want to compact context so that I can save tokens",Summarizes and compacts conversation context,Passed,2026-06-20,,,Passed
+F012,/recall,Slash Command,"As a user, I want to search memory so that I can find past information",Searches memory for matching facts and displays results,Passed,2026-06-20,,,Passed
+F013,/forget,Slash Command,"As a user, I want to clear memory so that I can start fresh",Clears stored memory,Passed,2026-06-20,,,Passed
+F014,/rules,Slash Command,"As a user, I want to see learned rules so that I know what patterns exist",Displays learned rules from workflow memory,Passed,2026-06-20,,,Passed
+F015,/alias,Slash Command,"As a user, I want to manage aliases so that I can create shortcuts",Lists/creates/removes text aliases,Passed,2026-06-20,,,Passed
+F016,/knowledge,Slash Command,"As a user, I want to manage knowledge graph so that I can store relationships",Adds/queries/lists knowledge graph triples,Passed,2026-06-20,,,Passed
+F017,/sessions,Slash Command,"As a user, I want to list sessions so that I can see my history",Lists all saved sessions with metadata,Passed,2026-06-20,,,Passed
+F018,/export,Slash Command,"As a user, I want to export session so that I can save my work",Exports current session to file,Passed,2026-06-20,,,Passed
+F019,/undo,Slash Command,"As a user, I want to undo operations so that I can revert mistakes",Reverts last action or lists undo history,Passed,2026-06-20,,,Passed
+F020,/persona,Slash Command,"As a user, I want to manage persona so that I can change AI behavior",Lists/sets/gets/clears AI persona,Passed,2026-06-20,,,Passed
+F021,/tasks,Slash Command,"As a user, I want to see tasks so that I know what's pending",Shows active task list,Passed,2026-06-20,,,Passed
+F022,/workflow,Slash Command,"As a user, I want to run workflows so that I can automate processes",Parses/validates/executes YAML workflows,Passed,2026-06-20,,,Passed
+F023,/metrics,Slash Command,"As a user, I want to manage metrics so that I can track quality",Defines/records/views quality metrics,Passed,2026-06-20,,,Passed
+F024,/campaign,Slash Command,"As a user, I want to start campaigns so that I can track refactoring",Initiates a refactoring campaign,Passed,2026-06-20,,,Passed
+F025,/report,Slash Command,"As a user, I want to generate reports so that I can see productivity",Generates productivity report with stats,Passed,2026-06-20,,,Passed
+F026,/index,Slash Command,"As a user, I want to rebuild index so that search is up to date",Rebuilds search index,Passed,2026-06-20,,,Passed
+F027,/skill,Slash Command,"As a user, I want to view skills so that I know available capabilities",Lists available skills,Passed,2026-06-20,,,Passed
+F028,/health,Slash Command,"As a user, I want to check health so that I know system status",Checks LLM/memory/safety/tools status,Passed,2026-06-20,,,Passed
+F029,/self-update,Slash Command,"As a user, I want to check updates so that I can stay current",Checks for available updates,Passed,2026-06-20,,,Passed
+F030,/review,Slash Command,"As a user, I want to review code so that I can find issues",Performs code review analysis,Passed,2026-06-20,,,Passed
+F031,/test,Slash Command,"As a user, I want to generate tests so that I can improve coverage",Generates test cases for code,Passed,2026-06-20,,,Passed
+F032,/debug,Slash Command,"As a user, I want to debug code so that I can find bugs",Enters debugging mode,Passed,2026-06-20,,,Passed
+F033,/ci,Slash Command,"As a user, I want to check CI/CD so that I know pipeline status",Checks CI/CD pipeline status,Passed,2026-06-20,,,Passed
+F034,/docs,Slash Command,"As a user, I want to generate docs so that I can document code",Generates documentation,Passed,2026-06-20,,,Passed
+F035,/deps,Slash Command,"As a user, I want to analyze dependencies so that I can understand structure",Analyzes and displays dependency graph,Passed,2026-06-20,,,Passed
+F036,/cleanup,Slash Command,"As a user, I want to find dead code so that I can remove unused code",Scans and identifies dead code,Passed,2026-06-20,,,Passed
+F037,/bench,Slash Command,"As a user, I want to benchmark so that I can measure performance",Runs performance benchmarks,Passed,2026-06-20,,,Passed
+F038,/changelog,Slash Command,"As a user, I want to generate changelog so that I can document changes",Generates changelog from git history,Passed,2026-06-20,,,Passed
+F039,/license-check,Slash Command,"As a user, I want to check licenses so that I can ensure compliance",Scans dependencies for license compatibility,Passed,2026-06-20,,,Passed
+F040,/git-hooks,Slash Command,"As a user, I want to manage git hooks so that I can automate workflows",Lists/installs/manages git hooks,Passed,2026-06-20,,,Passed
+F041,/lsp,Slash Command,"As a user, I want to connect LSP so that I can get code intelligence",Connects to language server,Passed,2026-06-20,,,Passed
+F042,/dap,Slash Command,"As a user, I want to connect DAP so that I can debug code",Connects to debug adapter,Passed,2026-06-20,,,Passed
+F043,/achievements,Slash Command,"As a user, I want to see achievements so that I can track progress",Shows earned badges and milestones,Passed,2026-06-20,,,Passed
+F044,/minute,Slash Command,"As a user, I want to record meeting notes so that I can document meetings",Records meeting notes,Passed,2026-06-20,,,Passed
+F045,--help,CLI Flag,"As a user, I want to see help so that I know available options",Displays help text with all flags and subcommands,Passed,2026-06-20,,,Passed
+F046,--version,CLI Flag,"As a user, I want to see version so that I know what's installed",Displays version string,Passed,2026-06-20,,,Passed
+F047,--print/-p,CLI Flag,"As a user, I want to run headless queries so that I can use CLI mode",Runs one-shot query and outputs to stdout,Passed,2026-06-20,,,Passed
+F048,--interactive/-i,CLI Flag,"As a user, I want interactive mode so that I can chat",Starts interactive REPL,Passed,2026-06-20,,,Passed
+F049,--provider,CLI Flag,"As a user, I want to specify provider so that I can use different LLMs",Sets LLM provider,Passed,2026-06-20,,,Passed
+F050,--model,CLI Flag,"As a user, I want to specify model so that I can use different models",Sets LLM model,Passed,2026-06-20,,,Passed
+F051,--mode,CLI Flag,"As a user, I want to specify mode so that I can change behavior",Sets agent mode,Passed,2026-06-20,,,Passed
+F052,--yolo,CLI Flag,"As a user, I want to skip confirmations so that I can work faster",Bypasses all HITL gates,Passed,2026-06-20,,,Passed
+F053,--timeout,CLI Flag,"As a user, I want to set timeout so that I can control request duration",Sets request timeout in milliseconds,Passed,2026-06-20,,,Passed
+F054,kairos setup,CLI Subcommand,"As a user, I want to run setup so that I can configure Kairos",Runs first-run interactive wizard,Passed,2026-06-20,,,Passed
+F055,kairos web,CLI Subcommand,"As a user, I want to start web interface so that I can use browser",Starts web server on port 3333,Passed,2026-06-20,,,Passed
+F056,kairos daemon,CLI Subcommand,"As a user, I want to start daemon so that I can run background tasks",Starts background daemon with worker pool,Passed,2026-06-20,,,Passed
+F057,kairos provider list,CLI Subcommand,"As a user, I want to list providers so that I can see available options",Lists all providers with online/offline status,Passed,2026-06-20,,,Passed
+F058,kairos provider test,CLI Subcommand,"As a user, I want to test provider so that I can verify connection",Tests provider connection and reports result,Passed,2026-06-20,,,Passed
+F059,kairos provider discover,CLI Subcommand,"As a user, I want to discover providers so that I can find local LLMs",Probes local endpoints for available providers,Passed,2026-06-20,,,Passed 
+F060,read_file,Tool,"As a user, I want to read files so that I can examine code",Returns file contents with line numbers,Not Tested,,,, 
+F061,write_file,Tool,"As a user, I want to write files so that I can create code",Writes content to specified file,Not Tested,,,, 
+F062,edit_file,Tool,"As a user, I want to edit files so that I can modify code",Applies targeted edits to existing files,Not Tested,,,, 
+F063,glob,Tool,"As a user, I want to find files so that I can locate code",Finds files matching glob pattern,Not Tested,,,, 
+F064,grep,Tool,"As a user, I want to search content so that I can find text",Searches file contents by regex,Not Tested,,,, 
+F065,bash,Tool,"As a user, I want to run shell commands so that I can execute system operations",Executes shell command with timeout,Not Tested,,,, 
+F066,git,Tool,"As a user, I want to use git so that I can manage version control",Performs git operations (commit/branch/diff),Not Tested,,,, 
+F067,http_fetch,Tool,"As a user, I want to fetch URLs so that I can access web content",Fetches HTTP content from URLs,Not Tested,,,, 
+F068,web_search,Tool,"As a user, I want to search web so that I can find information",Searches the web for information,Not Tested,,,, 
+F069,memory_ops,Tool,"As a user, I want to manage memory so that I can store information",CRUD operations on memory database,Not Tested,,,, 
+F070,codemod,Tool,"As a user, I want to transform code so that I can refactor automatically",Applies code transformations,Not Tested,,,, 
+F071,ast_analysis,Tool,"As a user, I want to analyze AST so that I can understand code structure",Analyzes abstract syntax tree,Not Tested,,,, 
+F072,diff_edit,Tool,"As a user, I want to edit with diff so that I can make precise changes",Applies diff-based edits,Not Tested,,,, 
+F073,dead_code_cleanup,Tool,"As a user, I want to find dead code so that I can clean up",Identifies and removes unused code,Not Tested,,,, 
+F074,thinking,Tool,"As a user, I want structured thinking so that I can reason through problems",Provides structured thinking framework,Not Tested,,,, 
+F075,progress,Tool,"As a user, I want to track progress so that I can see completion",Tracks task progress with ETA,Not Tested,,,, 
+F076,undo,Tool,"As a user, I want to undo so that I can revert mistakes",Reverts operations with persistence,Not Tested,,,, 
+F077,session_recorder,Tool,"As a user, I want to record sessions so that I can save history",Records and exports session data,Not Tested,,,, 
+F078,time_tracking,Tool,"As a user, I want to track time so that I can measure productivity",Tracks time spent on tasks,Not Tested,,,, 
+F079,achievements,Tool,"As a user, I want achievements so that I can track milestones",Shows earned badges and progress,Not Tested,,,, 
+F080,workflow,Tool,"As a user, I want workflows so that I can automate processes",Parses and executes YAML workflows,Not Tested,,,, 
+F081,metrics,Tool,"As a user, I want metrics so that I can measure quality",Defines and tracks quality metrics,Not Tested,,,, 
+F082,knowledge,Tool,"As a user, I want knowledge graph so that I can store relationships",Manages subject-predicate-object triples,Not Tested,,,, 
+F083,alias,Tool,"As a user, I want aliases so that I can create shortcuts",Manages text alias expansion,Not Tested,,,, 
+F084,persona,Tool,"As a user, I want personas so that I can change AI behavior",Manages AI persona profiles,Not Tested,,,, 
+F085,templates,Tool,"As a user, I want templates so that I can generate boilerplate",Renders Jinja-style templates,Not Tested,,,, 
+F086,parallel,Tool,"As a user, I want parallel execution so that I can run tasks concurrently",Resolves dependencies and runs in parallel,Not Tested,,,, 
+F087,lsp,Tool,"As a user, I want LSP so that I can get code intelligence",Connects to language server protocol,Not Tested,,,, 
+F088,dap,Tool,"As a user, I want DAP so that I can debug code",Connects to debug adapter protocol,Not Tested,,,, 
+F089,security_scan,Tool,"As a user, I want security scanning so that I can find vulnerabilities",Scans for secrets and vulnerabilities,Not Tested,,,, 
+F090,performance_analysis,Tool,"As a user, I want performance analysis so that I can optimize code",Analyzes performance metrics,Not Tested,,,, 
+F091,advisories,Tool,"As a user, I want security advisories so that I can stay safe",Checks for security advisories,Not Tested,,,, 
+F092,dependency_graph,Tool,"As a user, I want dependency graph so that I can understand structure",Visualizes dependency relationships,Not Tested,,,, 
+F093,license_scanner,Tool,"As a user, I want license scanning so that I can ensure compliance",Scans licenses for compatibility,Not Tested,,,, 
+F094,benchmark,Tool,"As a user, I want benchmarking so that I can measure performance",Runs performance benchmarks,Not Tested,,,, 
+F095,interactive_debug,Tool,"As a user, I want interactive debugging so that I can find bugs",Provides debugging sessions,Not Tested,,,, 
+F096,heap_snapshot,Tool,"As a user, I want heap snapshots so that I can analyze memory",Captures and analyzes heap memory,Not Tested,,,, 
+F097,repro_case,Tool,"As a user, I want reproduction cases so that I can reproduce bugs",Generates minimal reproduction cases,Not Tested,,,, 
+F098,error_recovery,Tool,"As a user, I want error recovery so that I can fix issues",Provides error recovery suggestions,Not Tested,,,, 
+F099,code_review,Tool,"As a user, I want code review so that I can find issues",Performs collaborative code review,Not Tested,,,, 
+F100,docs_sync,Tool,"As a user, I want docs sync so that I can keep docs current",Synchronizes documentation with code,Not Tested,,,, 
+F101,adr_keeper,Tool,"As a user, I want ADR keeper so that I can track decisions",Manages Architecture Decision Records,Not Tested,,,, 
+F102,api_doc_gen,Tool,"As a user, I want API docs so that I can document APIs",Generates API documentation,Not Tested,,,, 
+F103,architecture_sketch,Tool,"As a user, I want architecture sketches so that I can visualize design",Creates ASCII architecture diagrams,Not Tested,,,, 
+F104,transpile,Tool,"As a user, I want transpilation so that I can convert code",Converts code between languages,Not Tested,,,, 
+F105,modernise,Tool,"As a user, I want modernization so that I can update legacy code",Modernizes legacy code patterns,Not Tested,,,, 
+F106,test_first,Tool,"As a user, I want test-first so that I can write tests first",Implements test-driven development workflow,Not Tested,,,, 
+F107,smart_compaction,Tool,"As a user, I want smart compaction so that I can save context",Intelligently compacts context,Not Tested,,,, 
+F108,pair_programming,Tool,"As a user, I want pair programming so that I can collaborate",Provides pair programming mode,Not Tested,,,, 
+F109,meeting_notes,Tool,"As a user, I want meeting notes so that I can document meetings",Records meeting notes,Not Tested,,,, 
+F110,onboarding_path,Tool,"As a user, I want onboarding so that I can learn the codebase",Provides onboarding guidance,Not Tested,,,, 
+F111,changelog,Tool,"As a user, I want changelog so that I can document changes",Generates changelogs,Not Tested,,,, 
+F112,release_notes,Tool,"As a user, I want release notes so that I can document releases",Generates release notes,Not Tested,,,, 
+F113,env_doctor,Tool,"As a user, I want env doctor so that I can check environment",Diagnoses environment issues,Not Tested,,,, 
+F114,git_bisect,Tool,"As a user, I want git bisect so that I can find bugs",Automates git bisect,Not Tested,,,, 
+F115,secret_rotation,Tool,"As a user, I want secret rotation so that I can rotate credentials",Rotates secrets and credentials,Not Tested,,,, 
+F116,query_optimisation,Tool,"As a user, I want query optimization so that I can improve performance",Analyzes and optimizes queries,Not Tested,,,, 
+F117,cicd_optimiser,Tool,"As a user, I want CI/CD optimization so that I can improve pipelines",Optimizes CI/CD pipelines,Not Tested,,,, 
+F118,supply_chain,Tool,"As a user, I want supply chain analysis so that I can ensure security",Analyzes supply chain security,Not Tested,,,, 
+F119,log_correlation,Tool,"As a user, I want log correlation so that I can trace issues",Correlates log entries,Not Tested,,,, 
+F120,learning,Tool,"As a user, I want learning so that I can improve over time",Tracks learning and adaptation,Not Tested,,,, 
+F121,session_continuity,Tool,"As a user, I want session continuity so that I can resume work",Maintains session state across gaps,Not Tested,,,, 
+F122,live_streaming,Tool,"As a user, I want live streaming so that I can see real-time output",Streams command output in real-time,Not Tested,,,, 
+F123,error_recovery,Tool,"As a user, I want error recovery so that I can fix issues",Provides strategic error recovery,Not Tested,,,, 
+F124,dependency_graph,Tool,"As a user, I want dependency graph so that I can understand structure",Visualizes import relationships,Not Tested,,,, 
+F125,architecture_sketch,Tool,"As a user, I want architecture sketches so that I can visualize design",Creates ASCII diagrams,Not Tested,,,, 
+F126,meeting_notes,Tool,"As a user, I want meeting notes so that I can document meetings",Records structured meeting notes,Not Tested,,,, 
+F127,changelog,Tool,"As a user, I want changelog so that I can document changes",Generates Keep-a-Changelog format,Not Tested,,,, 
+F128,license_scanner,Tool,"As a user, I want license scanning so that I can ensure compliance",Scans dependency licenses,Not Tested,,,, 
+F129,benchmark,Tool,"As a user, I want benchmarking so that I can measure performance",Runs performance benchmarks,Not Tested,,,, 
+F130,db_migration,Tool,"As a user, I want DB migration so that I can manage databases",Generates database migrations,Not Tested,,,, 
+F131,api_doc_gen,Tool,"As a user, I want API docs so that I can document APIs",Generates OpenAPI/GraphQL docs,Not Tested,,,, 
+F132,environment_bootstrap,Tool,"As a user, I want environment bootstrap so that I can set up projects",Bootstraps development environment,Not Tested,,,, 
+F133,offline_mode,Tool,"As a user, I want offline mode so that I can work without internet",Operates in offline mode,Not Tested,,,, 
+F134,encrypted_vault,Tool,"As a user, I want encrypted vault so that I can store secrets",Manages encrypted secret storage,Not Tested,,,, 
+F135,team_collaboration,Tool,"As a user, I want team collaboration so that I can work with others",Enables team collaboration features,Not Tested,,,, 
+F136,skill_marketplace,Tool,"As a user, I want skill marketplace so that I can find skills",Browses and installs skills,Not Tested,,,, 
+F137,quick_commands,Tool,"As a user, I want quick commands so that I can access features fast",Shows quick command wheel,Not Tested,,,, 
+F138,inline_diff_preview,Tool,"As a user, I want inline diff so that I can see changes",Shows inline diff preview,Not Tested,,,, 
+F139,chat_widgets,Tool,"As a user, I want chat widgets so that I can customize UI",Manages chat widgets,Not Tested,,,, 
+F140,branch_diff,Tool,"As a user, I want branch diff so that I can compare changes",Compares branch differences,Not Tested,,,, 
+F141,conversation_thread,Tool,"As a user, I want conversation threads so that I can organize discussions",Manages conversation threads,Not Tested,,,, 
+F142,template_init,Tool,"As a user, I want template init so that I can start from templates",Initializes from project templates,Not Tested,,,, 
+F143,mood_adaptive,Tool,"As a user, I want mood adaptive so that I can get personalized responses",Adapts to user mood,Not Tested,,,, 
+F144,progress_indicator,Tool,"As a user, I want progress indicators so that I can see completion",Shows visual progress,Not Tested,,,, 
+F145,dead_code_cleanup,Tool,"As a user, I want dead code cleanup so that I can remove unused code",Finds and removes dead code,Not Tested,,,, 
+F146,NORMAL,Agent Mode,"As a user, I want NORMAL mode so that I can work with confirmations",Default mode with HITL for risky tools,Not Tested,,,, 
+F147,PLAN,Agent Mode,"As a user, I want PLAN mode so that I can analyze without changes",Read-only planning mode,Not Tested,,,, 
+F148,ULTRAPLAN,Agent Mode,"As a user, I want ULTRAPLAN mode so that I can do deep analysis",Deep planning with large thinking budget,Not Tested,,,, 
+F149,AUTO,Agent Mode,"As a user, I want AUTO mode so that I can work without confirmations",Auto-approves safe tools,Not Tested,,,, 
+F150,YOLO,Agent Mode,"As a user, I want YOLO mode so that I can work at maximum speed",Bypasses all safety checks,Not Tested,,,, 
+F151,SWARM,Agent Mode,"As a user, I want SWARM mode so that I can parallelize tasks",Multi-worker parallel execution,Not Tested,,,, 
+F152,DAEMON,Agent Mode,"As a user, I want DAEMON mode so that I can run background tasks",Background process with worker pool,Not Tested,,,, 
+F153,DREAM,Agent Mode,"As a user, I want DREAM mode so that I can consolidate memory",Memory consolidation mode,Not Tested,,,, 
+F154,UNDERCOVER,Agent Mode,"As a user, I want UNDERCOVER mode so that I can hide AI traces",Strips AI fingerprints from commits,Not Tested,,,, 
+F155,HEADLESS,Agent Mode,"As a user, I want HEADLESS mode so that I can use CLI",No TUI, stdout/stderr only,Not Tested,,,, 
+F156,VOICE,Agent Mode,"As a user, I want VOICE mode so that I can use speech",Pipe I/O to STT/TTS binaries,Not Tested,,,, 
+F157,llamacpp,LLM Provider,"As a user, I want llama.cpp so that I can use local models",Connects to llama.cpp server,Not Tested,,,, 
+F158,ollama,LLM Provider,"As a user, I want Ollama so that I can use local models",Connects to Ollama server,Not Tested,,,, 
+F159,lmstudio,LLM Provider,"As a user, I want LM Studio so that I can use local models",Connects to LM Studio server,Not Tested,,,, 
+F160,oobabooga,LLM Provider,"As a user, I want Text Gen WebUI so that I can use local models",Connects to Text Gen WebUI,Not Tested,,,, 
+F161,localai,LLM Provider,"As a user, I want LocalAI so that I can use local models",Connects to LocalAI server,Not Tested,,,, 
+F162,openai,LLM Provider,"As a user, I want OpenAI so that I can use GPT models",Connects to OpenAI API,Not Tested,,,, 
+F163,anthropic,LLM Provider,"As a user, I want Anthropic so that I can use Claude models",Connects to Anthropic API,Not Tested,,,, 
+F164,gemini,LLM Provider,"As a user, I want Gemini so that I can use Google models",Connects to Google Gemini API,Not Tested,,,, 
+F165,azure,LLM Provider,"As a user, I want Azure so that I can use Azure OpenAI",Connects to Azure OpenAI,Not Tested,,,, 
+F166,groq,LLM Provider,"As a user, I want Groq so that I can use fast inference",Connects to Groq API,Not Tested,,,, 
+F167,together,LLM Provider,"As a user, I want Together AI so that I can use open models",Connects to Together AI,Not Tested,,,, 
+F168,deepseek,LLM Provider,"As a user, I want DeepSeek so that I can use reasoning models",Connects to DeepSeek API,Not Tested,,,, 
+F169,mistral,LLM Provider,"As a user, I want Mistral so that I can use Codestral",Connects to Mistral API,Not Tested,,,, 
+F170,perplexity,LLM Provider,"As a user, I want Perplexity so that I can search-integrated responses",Connects to Perplexity API,Not Tested,,,, 
+F171,fireworks,LLM Provider,"As a user, I want Fireworks so that I can use fine-tuned models",Connects to Fireworks API,Not Tested,,,, 
+F172,openrouter,LLM Provider,"As a user, I want OpenRouter so that I can access 100+ models",Connects to OpenRouter API,Not Tested,,,, 
+F173,xai,LLM Provider,"As a user, I want xAI so that I can use Grok models",Connects to xAI API,Not Tested,,,, 
+F174,cohere,LLM Provider,"As a user, I want Cohere so that I can use Command models",Connects to Cohere API,Not Tested,,,, 
+F175,replicate,LLM Provider,"As a user, I want Replicate so that I can use async inference",Connects to Replicate API,Not Tested,,,, 
+F176,Safety Pipeline,Safety,"As a user, I want safety checks so that I am protected",6-layer safety pipeline runs on every tool call,Not Tested,,,, 
+F177,Audit Logging,Safety,"As a user, I want audit logging so that I can track actions",All tool executions logged with scrubbed secrets,Not Tested,,,, 
+F178,Path Confinement,Safety,"As a user, I want path confinement so that I stay in workspace",Blocks paths outside workspace root,Not Tested,,,, 
+F179,Harm Detection,Safety,"As a user, I want harm detection so that destructive commands are blocked",Blocks rm -rf, format, etc.,Not Tested,,,, 
+F180,HITL Approval,Safety,"As a user, I want HITL so that risky actions require confirmation",Requires confirmation for bash/write/edit,Not Tested,,,, 
+F181,Network Security,Safety,"As a user, I want network security so that SSRF is prevented",Blocks private IP access,Not Tested,,,, 
+F182,Secret Scrubbing,Safety,"As a user, I want secret scrubbing so that keys are not logged",Masks API keys/tokens in logs,Not Tested,,,, 
+F183,SQLite Memory,Memory,"As a user, I want SQLite memory so that I can persist information",7-table database with FTS5 search,Not Tested,,,, 
+F184,FTS5 Search,Memory,"As a user, I want FTS5 search so that I can find information fast",Full-text search with BM25 ranking,Not Tested,,,, 
+F185,Conversation History,Memory,"As a user, I want conversation history so that I can review past chats",Stores full conversation per session,Not Tested,,,, 
+F186,Topic Facts,Memory,"As a user, I want topic facts so that I can store knowledge",Stores topic-fact pairs with embeddings,Not Tested,,,, 
+F187,Workflow Memory,Memory,"As a user, I want workflow memory so that I can store patterns",Stores preferences/decisions/patterns,Not Tested,,,, 
+F188,MCP Client,Integration,"As a user, I want MCP so that I can use external tools",Connects to MCP servers for tools,Not Tested,,,, 
+F189,Plugin Loader,Integration,"As a user, I want plugins so that I can extend functionality",Loads plugins from ~/.kairos/plugins/,Not Tested,,,, 
+F190,Skill Runner,Integration,"As a user, I want skills so that I can automate workflows",Loads YAML-defined skills,Not Tested,,,, 
+F191,Hook Runner,Integration,"As a user, I want hooks so that I can automate on events",Runs shell scripts on tool events,Not Tested,,,, 
+F192,EventBus,Integration,"As a user, I want event bus so that I can hook into system",7 event types for tool/session/turn events,Not Tested,,,, 
+F193,Web Interface,Integration,"As a user, I want web interface so that I can use browser",HTTP API with streaming chat,Not Tested,,,, 
+F194,Daemon,Integration,"As a user, I want daemon so that I can run background tasks",Worker pool with health checks,Not Tested,,,, 
+F195,Setup Wizard,Integration,"As a user, I want setup wizard so that I can configure easily",Interactive first-run configuration,Not Tested,,,, 
+F196,Config System,Integration,"As a user, I want config system so that I can customize behavior",Hierarchical config with env vars,Not Tested,,,, 
+F197,Shell Detection,Utility,"As a user, I want shell detection so that commands work cross-platform",Detects PowerShell/Cmd/Bash/Zsh,Not Tested,,,, 
+F198,Path Resolution,Utility,"As a user, I want path resolution so that paths work cross-platform",Normalizes Windows/Unix paths,Not Tested,,,, 
+F199,Token Estimation,Utility,"As a user, I want token estimation so that I can track usage",Estimates token count for text,Not Tested,,,, 
+F200,TUI Layout,UI,"As a user, I want TUI layout so that I can see chat and context",70% chat, 30% context, status bar,Not Tested,,,, 
+F201,Mascot Animation,UI,"As a user, I want mascot animation so that I can see branding",Metallic shine effect every 15s,Not Tested,,,, 
+F202,Command Palette,UI,"As a user, I want command palette so that I can access commands fast",Ctrl+K fuzzy search for commands,Not Tested,,,, 
+F203,Smart Scroll,UI,"As a user, I want smart scroll so that I can read output",Auto-scroll during streaming,Not Tested,,,, 
+F204,Mouse Support,UI,"As a user, I want mouse support so that I can interact naturally",Clickable panes, scroll wheel,Not Tested,,,, 
+F205,Streaming,UI,"As a user, I want streaming so that I can see output in real-time",Token-by-token streaming from LLM,Not Tested,,,, 
+F206,ReAct Loop,Agent,"As a user, I want ReAct loop so that I can reason and act",Thought->Action->Observation loop,Not Tested,,,, 
+F207,Compose Pipeline,Agent,"As a user, I want compose pipeline so that I can do autonomous work",8-step spec->plan->execute->review pipeline,Not Tested,,,, 
+F208,Swarm Coordinator,Agent,"As a user, I want swarm so that I can parallelize tasks",Multi-worker task decomposition,Not Tested,,,, 
+F209,Dream Engine,Agent,"As a user, I want dream engine so that I can consolidate memory",Extracts facts from conversation history,Not Tested,,,, 
+F210,Undercover Mode,Agent,"As a user, I want undercover so that I can hide AI traces",Strips AI fingerprints from commits,Not Tested,,,, 
