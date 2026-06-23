@@ -1,0 +1,9 @@
+ops:
+  - extract-function
+  - rename-symbol
+  - inline-variable
+  - extract-constant
+safetyNotes:
+  requireGitWorkingTree: true
+  makeBackup: false
+textBased: true

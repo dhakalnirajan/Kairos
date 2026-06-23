@@ -1,9 +1,9 @@
 import { describe, test, expect } from 'bun:test';
 import { ToolRegistry } from '../src/tools/registry.ts';
-import { readFileTool } from '../src/tools/builtin/read_file.ts';
-import { writeFileTool } from '../src/tools/builtin/write_file.ts';
-import { bashTool } from '../src/tools/builtin/bash.ts';
-import { memoryOpsTool } from '../src/tools/builtin/memory_ops.ts';
+import { readFileTool } from '../src/tools/builtin/file/read_file.ts';
+import { writeFileTool } from '../src/tools/builtin/file/write_file.ts';
+import { bashTool } from '../src/tools/builtin/shell/bash.ts';
+import { memoryOpsTool } from '../src/tools/builtin/memory/memory_ops.ts';
 import { registerAllBuiltinTools } from '../src/tools/builtin/index.ts';
 import type { KairosConfigOutput } from '../src/config/schema.ts';
 import { join } from 'path';

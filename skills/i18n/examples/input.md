@@ -1,0 +1,1 @@
+--check-keys --base locales/en.json --target locales/es.json,locales/fr.json

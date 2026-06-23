@@ -1,8 +1,8 @@
 import { describe, test, expect } from 'bun:test';
-import { globTool } from '../src/tools/builtin/glob.ts';
-import { grepTool } from '../src/tools/builtin/grep.ts';
-import { editFileTool } from '../src/tools/builtin/edit_file.ts';
-import { httpFetchTool } from '../src/tools/builtin/http_fetch.ts';
+import { globTool } from '../src/tools/builtin/file/glob.ts';
+import { grepTool } from '../src/tools/builtin/file/grep.ts';
+import { editFileTool } from '../src/tools/builtin/file/edit_file.ts';
+import { httpFetchTool } from '../src/tools/builtin/web/http_fetch.ts';
 import { join } from 'path';
 import { mkdirSync, rmSync, writeFileSync } from 'fs';
 

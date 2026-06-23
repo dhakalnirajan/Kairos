@@ -1,5 +1,5 @@
 import type { ToolInstance, ToolContext, ToolResult } from '../../types/tools.ts';
-import { timeTracker } from '../tracking.ts';
+import { timeTracker } from '../session/tracking.ts';
 
 export const trackingTool: ToolInstance = {
   name: 'time_tracking',

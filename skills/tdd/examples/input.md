@@ -1,0 +1,1 @@
+--behavior "parseDate returns null for an invalid date string" --target src/date.ts --framework vitest

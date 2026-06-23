@@ -9,6 +9,7 @@ export interface ToolManifest {
 export interface ToolContext {
   workspaceRoot: string;
   sessionId: string;
+  config?: Record<string, unknown>;
 }
 
 export interface ToolResult {

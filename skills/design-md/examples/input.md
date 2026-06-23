@@ -1,0 +1,1 @@
+--problem "Need to rate limit uploads per user" --approach "Token bucket in Redis, checked in middleware" --alt "Polling on a fixed interval" --alt "Fixed-window counter in Postgres"

@@ -1,0 +1,7 @@
+contextRadius: 3
+maxFramesInspected: 5
+maxStaticMatches: 10
+searchIncludeExtensions:
+  - "*.ts"
+  - "*.js"
+  - "*.py"

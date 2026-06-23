@@ -1,0 +1,1 @@
+--scope src/components/UploadForm.vue

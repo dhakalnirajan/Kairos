@@ -1,0 +1,1 @@
+--op extract-function --file src/upload.ts --range 12:24 --new-name validateUploadPayload

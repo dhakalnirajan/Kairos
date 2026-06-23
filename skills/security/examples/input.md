@@ -1,0 +1,1 @@
+--scan src/db/queries.ts --code-only

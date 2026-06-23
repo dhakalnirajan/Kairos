@@ -1,54 +1,88 @@
 ---
-name: security-and-hardening
-description: Hardens code against vulnerabilities. Use when handling user input, authentication, data storage, or external integrations.
+name: "security"
+version: "1.0.0"
+description: "Scans code for common vulnerability patterns (hardcoded secrets, SQL/command injection shapes, missing input validation on auth boundaries) and checks dependencies against known-vulnerable version ranges"
+author: "harness-core"
+category: "analysis"
+tools:
+  - read_file
+  - bash
+permissions:
+  - allow: [read_file]
+  - ask: [bash]
+dependencies:
+  bun: ">=1.1.0"
+  packages: []
+entrypoint: "scripts/run.ts"
 ---
 
-# Security and Hardening
+## Purpose
 
-## Overview
+`security` runs two checks: a static source scan for vulnerability-shaped
+code (string-concatenated SQL, `child_process.exec` with interpolated
+input, hardcoded API keys/secrets matching common formats), and a
+dependency check that reads the project's lockfile and flags packages
+below known-patched versions for a small curated list of historically
+significant CVEs. It does not run a full SAST engine or a live dependency
+vulnerability database lookup — it's a fast, offline first pass meant to
+catch the obvious and common cases before something more thorough runs in
+CI.
 
-Security-first development practices. Treat every external input as hostile, every secret as sacred, and every authorization check as mandatory.
+## Behavior Patterns
+
+- Secret detection uses format-shaped regexes (AWS access key ID pattern,
+  generic `api[_-]?key\s*=\s*['"][A-Za-z0-9]{20,}`, private key PEM
+  headers) rather than entropy analysis — fewer false positives, will miss
+  secrets that don't match a known format.
+- SQL injection detection flags string concatenation or template literals
+  feeding directly into a `query(...)` call, distinguishing from
+  parameterized calls (`query(sql, [params])`) which it does not flag.
+- Command injection detection flags `exec`/`execSync`/`spawn` calls where
+  the command string contains a template literal interpolation
+  (`` `...${x}...` ``) rather than an argument array.
+- Dependency check reads `package.json`/`package-lock.json` or
+  `requirements.txt` and compares against a small bundled list in
+  `references/known-vulnerable.json` — this list is illustrative and not a
+  substitute for `npm audit` / `pip-audit` / a real vulnerability database.
+- Every finding includes a severity (`critical`, `high`, `medium`) and
+  never auto-redacts or modifies the flagged file.
 
 ## When to Use
 
-- Building anything that accepts user input
-- Implementing authentication or authorization
-- Storing or transmitting sensitive data
-- Integrating with external APIs or services
+- Before merging any change touching auth, payments, user input handling,
+  or database queries.
+- Periodically as a baseline sweep across an existing codebase.
+- Not a replacement for `npm audit`, `pip-audit`, Snyk, or a real SAST
+  tool in CI — use this as a fast local pre-check, those as the
+  authoritative gate.
 
-## Process: Threat Model First
+## Example Invocations
 
-1. **Map the trust boundaries.** Where does untrusted data cross into your system?
-2. **Name the assets.** What's worth stealing or breaking?
-3. **Run STRIDE over each boundary:**
-   - Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege
+```
+/skill run security --scan src/
+/skill run security --scan src/db/queries.ts --deps-only
+/skill run security --scan . --code-only
+```
 
-## The Three-Tier Boundary System
+## Expected Inputs
 
-### Always Do (No Exceptions)
-- Validate all external input at the system boundary
-- Parameterize all database queries
-- Encode output to prevent XSS
-- Use HTTPS for all external communication
-- Hash passwords with bcrypt/scrypt/argon2
-- Run `npm audit` before every release
+- `--scan` (path, required): file or directory to scan.
+- `--deps-only` (flag, optional): skip source scan, only check dependencies.
+- `--code-only` (flag, optional): skip dependency check, only scan source.
 
-### Ask First (Requires Human Approval)
-- Adding new authentication flows
-- Storing new categories of sensitive data
-- Adding new external service integrations
+## Expected Outputs
 
-### Never Do
-- Never commit secrets to version control
-- Never log sensitive data
-- Never trust client-side validation as a security boundary
-- Never use `eval()` or `innerHTML` with user-provided data
+JSON: `{ "scanned": number, "findings": [{ "file": string, "line": number | null, "severity": "critical"|"high"|"medium", "category": "secret"|"sql-injection"|"command-injection"|"vulnerable-dependency", "message": string }] }`.
 
-## Verification
+## Side Effects and Warnings
 
-After implementing security-relevant code:
-
-- [ ] `npm audit` shows no critical or high vulnerabilities
-- [ ] No secrets in source code or git history
-- [ ] All user input validated at system boundaries
-- [ ] Authentication and authorization checked on every protected endpoint
+- Read-only against source; `bash` permission is only used to read
+  lockfile contents if needed, never to execute project code.
+- This is a pattern-matching scanner, not a real vulnerability database —
+  `references/known-vulnerable.json` is a small illustrative list and will
+  go stale. Always run `npm audit`/`pip-audit` as the authoritative
+  dependency check; treat this skill's dependency findings as a reminder
+  to do that, not as exhaustive.
+- Secret detection will not catch secrets that don't match a known format,
+  and can occasionally flag test fixtures or example keys — review findings
+  before treating every hit as a live credential.

@@ -1,0 +1,8 @@
+templates:
+  - ts-function
+  - ts-class
+  - route-handler
+  - vue-component
+defaultHttpMethod: GET
+generateTestStub: true
+overwriteRequiresForce: true

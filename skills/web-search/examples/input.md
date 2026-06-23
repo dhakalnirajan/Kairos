@@ -1,0 +1,1 @@
+--query "Bun 1.2 release notes" --count 3 --sentences 4

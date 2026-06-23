@@ -1,0 +1,1 @@
+--diagram component --node "API:service" --node "DB:database" --edge "API->DB:reads/writes"

@@ -1,0 +1,1 @@
+--generate --name add_user_avatar --add-column "users.avatar_url:text" --output-dir migrations/

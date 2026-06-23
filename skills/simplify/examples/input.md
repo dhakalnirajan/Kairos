@@ -1,0 +1,1 @@
+--scope src/handlers/upload.ts --threshold-complexity 8

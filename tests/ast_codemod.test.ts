@@ -1,8 +1,8 @@
 import { describe, test, expect } from "bun:test";
 import { join } from "path";
 import { mkdirSync, rmSync, writeFileSync } from "fs";
-import { ASTNavigator } from "../src/tools/ast.ts";
-import { CodemodEngine, createCodemodTool } from "../src/tools/codemod.ts";
+import { ASTNavigator } from "../src/tools/analysis/ast.ts";
+import { CodemodEngine, createCodemodTool } from "../src/tools/analysis/codemod.ts";
 
 describe("ASTNavigator", () => {
   const testDir = join(process.cwd(), "_test_ast_navigator");

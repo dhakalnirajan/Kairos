@@ -1,0 +1,3 @@
+filenamePattern: "<timestamp>_<slug>.<up|down>.sql"
+defaultColumnType: text
+manualReviewMarker: "MANUAL REVIEW REQUIRED"

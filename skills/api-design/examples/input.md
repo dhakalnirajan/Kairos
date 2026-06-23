@@ -1,0 +1,1 @@
+--lint --endpoint "GET /users -> 200" --endpoint "POST /user -> 200" --endpoint "DELETE /users/{id} -> 200"

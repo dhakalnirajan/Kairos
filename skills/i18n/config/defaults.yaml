@@ -1,0 +1,14 @@
+translationFunctionPatterns:
+  - "t("
+  - "$t("
+  - "i18n.t("
+scanExtensions:
+  - .vue
+  - .html
+  - .tsx
+  - .jsx
+excludeDirs:
+  - .git
+  - node_modules
+  - dist
+  - build

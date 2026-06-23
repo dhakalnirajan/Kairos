@@ -1,0 +1,8 @@
+includePattern: "**/*.ts"
+excludeTestFiles: true
+excludeDirs:
+  - .git
+  - node_modules
+  - dist
+  - build
+markUndocumentedAs: "_undocumented_"

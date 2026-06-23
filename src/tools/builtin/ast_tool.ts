@@ -1,5 +1,5 @@
 import type { ToolInstance, ToolContext, ToolResult } from '../../types/tools.ts';
-import { ASTNavigator } from '../ast.ts';
+import { ASTNavigator } from '../analysis/ast.ts';
 
 const navigator = new ASTNavigator();
 

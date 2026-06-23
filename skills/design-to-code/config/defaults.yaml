@@ -1,0 +1,4 @@
+targetFramework: vue3
+scriptLang: ts
+styleMode: scoped
+overwriteRequiresForce: true

@@ -1,5 +1,5 @@
 import type { ToolInstance, ToolContext, ToolResult } from '../../types/tools.ts';
-import { gitHookManager } from '../githooks.ts';
+import { gitHookManager } from '../devops/githooks.ts';
 
 export const githooksTool: ToolInstance = {
   name: 'git_hooks',

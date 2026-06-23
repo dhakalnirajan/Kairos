@@ -50,15 +50,15 @@ describe('ExtensionLoader', () => {
 
 describe('SkillRunner', () => {
   test('loads skills from markdown files', async () => {
-    const testDir = join(process.cwd(), '_test_skills');
+    const testDir = join(process.cwd(), '_test_skills', 'review');
     mkdirSync(testDir, { recursive: true });
-    writeFileSync(join(testDir, 'review.md'), 'name: code-review\n description: Review code\n trigger: on-pr\n system prompt content');
+    writeFileSync(join(testDir, 'SKILL.md'), '---\nname: code-review\ndescription: Review code\ntools:\n  - read_file\n---\nSystem prompt content');
 
     const runner = new SkillRunner();
-    const skills = await runner.loadSkills(testDir);
+    const skills = await runner.loadSkills(join(process.cwd(), '_test_skills'));
     expect(skills.length).toBe(1);
     expect(skills[0]?.name).toBe('code-review');
-    rmSync(testDir, { recursive: true, force: true });
+    rmSync(join(process.cwd(), '_test_skills'), { recursive: true, force: true });
   });
 
   test('returns empty for nonexistent dir', async () => {

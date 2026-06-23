@@ -1,0 +1,15 @@
+thresholds:
+  complexity: 10
+  length: 50
+  depth: 4
+  params: 5
+excludeDirs:
+  - .git
+  - node_modules
+  - dist
+  - build
+includeExtensions:
+  - .ts
+  - .tsx
+  - .js
+  - .jsx

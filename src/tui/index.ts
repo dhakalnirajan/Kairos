@@ -435,6 +435,17 @@ export class TUI {
     const command = parts[0]?.toLowerCase() ?? "";
     const args = parts.slice(1);
 
+    // Check for SDLC commands first
+    if (command.startsWith("/sdlc")) {
+      const { handleSDLCommand } = await import("../sdlc/commands.ts");
+      const output = handleSDLCommand(cmd);
+      if (output) {
+        this.chatPane.append(output);
+        this.render();
+        return;
+      }
+    }
+
     const handledByTool = await this.executeToolCommand(command, args);
     if (handledByTool) {
       this.render();
@@ -618,21 +629,54 @@ export class TUI {
         },
       },
       "/skill": {
-        desc: "Learn skill",
-        handler: () => {
-          this.chatPane.append(
-            "\n{bold}{#208AAE-fg}=== Skills ==={/}{/bold}\n",
-          );
-          this.chatPane.append("Available skills:\n");
-          this.chatPane.append("  - code-review: Automated code review\n");
-          this.chatPane.append("  - test-gen: Test generation\n");
-          this.chatPane.append("{#4ECDC4-fg}2 skills loaded{/}\n");
+        desc: "Manage and run skills",
+        handler: async () => {
+          const { skillRunner } = await import('../skills/runner.ts');
+          await skillRunner.loadAllSkills();
+          const skills = skillRunner.getAllSkills();
+          const argsStr = args.join(' ');
+
+          if (!argsStr || argsStr === 'list') {
+            this.chatPane.append(
+              "\n{bold}{#208AAE-fg}=== Available Skills ==={/}{/bold}\n",
+            );
+            for (const skill of skills) {
+              this.chatPane.append(`  {bold}${skill.name}{/bold} - ${skill.description}\n`);
+            }
+            this.chatPane.append(`\n{#4ECDC4-fg}${skills.length} skills loaded{/}\n`);
+            this.chatPane.append("Usage: /skill run <name> --arg1 value1\n");
+          } else if (argsStr.startsWith('run ')) {
+            const skillName = argsStr.slice(4).trim().split(' ')[0] ?? '';
+            const skillArgs: Record<string, string> = {};
+            const argParts = argsStr.slice(4).trim().split(' ').slice(1);
+            for (let i = 0; i < argParts.length; i += 2) {
+              const key = argParts[i];
+              if (key?.startsWith('--')) {
+                skillArgs[key.slice(2)] = argParts[i + 1] ?? '';
+              }
+            }
+
+            this.chatPane.append(`\n{bold}{#208AAE-fg}Running skill: ${skillName}{/}{/bold}\n`);
+            const result = await skillRunner.executeSkill(skillName, skillArgs);
+            if (result.success) {
+              this.chatPane.append(`{#4ECDC4-fg}${result.output}{/}\n`);
+            } else {
+              this.chatPane.append(`{#FF6B6B-fg}Error: ${result.error}{/}\n`);
+            }
+          } else {
+            this.chatPane.append("\n{#4ECDC4-fg}Usage: /skill [list|run <name>]{/}\n");
+          }
           this.render();
         },
       },
       "/health": {
         desc: "Health check",
-        handler: () => {
+        handler: async () => {
+          const { ToolRegistry } = await import('../tools/registry.ts');
+          const { skillRunner } = await import('../skills/runner.ts');
+          const toolCount = this.tools?.getAll().length ?? 0;
+          await skillRunner.loadAllSkills();
+          const skillCount = skillRunner.getAllSkills().length;
           this.chatPane.append(
             "\n{bold}{#208AAE-fg}=== Health Check ==={/}{/bold}\n",
           );
@@ -646,7 +690,10 @@ export class TUI {
             "{bold}Safety Pipeline:{/bold} {#4ECDC4-fg}Active{/}\n",
           );
           this.chatPane.append(
-            "{bold}Tools:{/bold} {#4ECDC4-fg}10 available{/}\n",
+            `{bold}Tools:{/bold} {#4ECDC4-fg}${toolCount} available{/}\n`,
+          );
+          this.chatPane.append(
+            `{bold}Skills:{/bold} {#4ECDC4-fg}${skillCount} loaded{/}\n`,
           );
           this.chatPane.append("{#4ECDC4-fg}All systems operational{/}\n");
           this.render();

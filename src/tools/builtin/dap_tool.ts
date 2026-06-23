@@ -1,5 +1,5 @@
 import type { ToolInstance, ToolContext, ToolResult } from '../../types/tools.ts';
-import { dapBridge } from '../dap.ts';
+import { dapBridge } from '../ux/dap.ts';
 
 export const dapTool: ToolInstance = {
   name: 'debug_adapter',

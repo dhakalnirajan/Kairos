@@ -24,7 +24,7 @@ You have these tools available:
 | `glob` | read | Find files by pattern |
 | `grep` | read | Search file contents |
 | `http_fetch` | network | Fetch web content |
-| `web_search` | network | Search the web |
+| `web_search` | network | Search the web, fetch & extract page content |
 | `memory_ops` | read/write | Store/retrieve persistent facts |
 
 ## Code Style
@@ -69,14 +69,14 @@ src/
   llm/        Multi-provider LLM client (llamacpp, openai, ollama, anthropic)
   memory/     bun:sqlite with FTS5 full-text search
   tools/      Tool registry + builtin tools
-  security/   6-layer safety pipeline
+  security/   Safety pipeline (harm-detection, risk-classification, blueprint-policy, HITL)
   agent/      ReAct loop + Compose pipeline + Dream/Undercover modes
   tui/        Terminal UI (Blessed)
   cli/        CLI entry point + parser + setup wizard
   daemon/     Background HTTP server
   hooks/      EventBus + hook runner
   extensions/ Extension loader
-  skills/     Skill runner
+  skills/     Skill runner (27 skills including web-search)
   mcp/        Model Context Protocol client
   web/        Web interface server
   utils/      Logger, paths, tokenizer
@@ -89,10 +89,15 @@ tests/        Test suite (bun:test)
 |------|----------|
 | NORMAL | Default. HITL for risky tools. |
 | PLAN | Read-only. Analyze and plan only. |
+| ULTRAPLAN | Extended planning with deeper analysis. |
 | AUTO | Auto-approve safe tools. |
 | YOLO | Bypass all safety checks. |
 | HEADLESS | No TUI. Stdout/stderr only. |
-| COMPOSE | 8-step autonomous pipeline. |
+| SWARM | Parallel task execution. |
+| DAEMON | Background process mode. |
+| DREAM | Memory consolidation. |
+| UNDERCOVER | Strip AI fingerprints. |
+| VOICE | Voice interaction mode. |
 
 ## Slash Commands
 

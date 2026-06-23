@@ -1,0 +1,10 @@
+checks:
+  envVarCoverage: true
+  buildScriptPresence: true
+  dockerSanity: true
+envExampleFile: .env.example
+excludeDirs:
+  - .git
+  - node_modules
+  - dist
+  - build

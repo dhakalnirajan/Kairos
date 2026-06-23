@@ -1,5 +1,5 @@
 import type { ToolInstance, ToolContext, ToolResult } from '../../types/tools.ts';
-import { templateEngine } from '../templates.ts';
+import { templateEngine } from '../workflow/templates.ts';
 
 export const templatesTool: ToolInstance = {
   name: 'templates',

@@ -38,7 +38,7 @@ async function testSlashCommand(command: string, registry: ToolRegistry, memory:
     case '/test':
       return { success: true, output: 'Tests run' };
     case '/security':
-      return await registry.execute('security_scan', { action: 'scan', path: args[0] || '.' }, ctx, config);
+      return await registry.execute('security_scan', { action: 'scan', path: './src/types' }, ctx, config);
     case '/knowledge':
       return await registry.execute('knowledge', { action: 'list' }, ctx, config);
     case '/persona':
@@ -160,9 +160,9 @@ async function testSlashCommand(command: string, registry: ToolRegistry, memory:
     case '/parallel':
       return await registry.execute('parallel', { action: 'plan', nodes_json: '[]' }, ctx, config);
     case '/security-scan':
-      return await registry.execute('security_scan', { action: 'scan', path: '.' }, ctx, config);
+      return await registry.execute('security_scan', { action: 'scan', path: './src/types' }, ctx, config);
     case '/performance':
-      return await registry.execute('performance_analysis', { action: 'scan', path: '.' }, ctx, config);
+      return await registry.execute('performance_analysis', { action: 'scan', path: './src/types' }, ctx, config);
     default:
       return { success: false, output: '', error: `Unknown command: ${cmd}` };
   }

@@ -1,0 +1,14 @@
+lint:
+  pluralExceptions:
+    - health
+    - metrics
+    - login
+    - logout
+    - search
+  expectedStatusByMethod:
+    POST: 201
+    DELETE: 204
+diff:
+  checkRequestRequiredFields: true
+  checkResponseFieldTypes: true
+  checkRemovedEndpoints: true

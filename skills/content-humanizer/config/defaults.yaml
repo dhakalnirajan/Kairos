@@ -1,0 +1,5 @@
+thresholds:
+  transitionDensity: 0.08
+  sentenceLengthStdDev: 15
+minSentencesForVarianceCheck: 5
+tellPhrasesFile: references/tell-phrases.json

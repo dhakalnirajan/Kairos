@@ -1,0 +1,13 @@
+measure:
+  defaultRuns: 3
+  warmupRuns: 1
+scan:
+  excludeDirs:
+    - .git
+    - node_modules
+    - dist
+    - build
+  patterns:
+    nPlusOne: true
+    syncIoInHandler: true
+    unboundedFetch: true

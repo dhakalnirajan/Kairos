@@ -1,5 +1,5 @@
 import type { ToolInstance, ToolContext, ToolResult } from '../../types/tools.ts';
-import { computeDiff, formatDiff } from '../diff.ts';
+import { computeDiff, formatDiff } from '../analysis/diff.ts';
 import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { join } from 'path';
 

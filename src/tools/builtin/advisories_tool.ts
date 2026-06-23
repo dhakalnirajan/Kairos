@@ -1,5 +1,5 @@
 import type { ToolInstance, ToolContext, ToolResult } from '../../types/tools.ts';
-import { advisoryWatcher } from '../advisories.ts';
+import { advisoryWatcher } from '../devops/advisories.ts';
 
 export const advisoriesTool: ToolInstance = {
   name: 'advisories',

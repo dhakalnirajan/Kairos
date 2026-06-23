@@ -1,0 +1,11 @@
+checks:
+  brokenLinks: true
+  orphanedNotes: true
+  tagInconsistencies: true
+newNote:
+  conventionSampleSize: 20
+  conventionThreshold: 0.5
+  fallbackFrontmatter:
+    - title
+    - created
+    - tags

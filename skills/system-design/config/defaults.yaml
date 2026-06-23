@@ -1,0 +1,7 @@
+diagramTypes:
+  - component
+  - sequence
+capacityDefaults:
+  secondsPerDay: 86400
+  hotDataFractionEstimate: 0.2
+validateDanglingReferences: true

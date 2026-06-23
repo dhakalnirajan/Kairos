@@ -1,0 +1,15 @@
+depth: normal
+maxCandidateFiles: 15
+riskKeywords:
+  - auth
+  - payment
+  - billing
+  - migration
+  - schema
+  - delete
+excludeDirs:
+  - .git
+  - node_modules
+  - dist
+  - build
+  - .next

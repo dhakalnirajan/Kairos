@@ -82,6 +82,15 @@ export const DEFAULT_CONFIG: KairosConfig = {
     memory: join(KAIROS_DIR, 'memory'),
     extensions: join(KAIROS_DIR, 'extensions'),
   },
+  webSearch: {
+    provider: 'brave',
+    mimoBaseUrl: 'https://api.xiaomimimo.com/v1',
+    mimoModel: 'mimo-v2.5',
+    maxResults: 5,
+    fetchContent: false,
+    fetchTimeout: 10000,
+    maxContentLength: 8000,
+  },
 };
 
 export function getDefaultConfigPath(): string {

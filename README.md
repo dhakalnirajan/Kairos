@@ -10,7 +10,7 @@
 
 > Terminal-native AI coding agent. Local-first, extensible, secure.
 
-**Version:** 0.1.0
+**Version:** 0.1.1
 
 ## What is Kairos Code?
 
@@ -18,11 +18,10 @@ Kairos Code is a terminal-native AI coding agent that runs locally with your cho
 
 **Key features:**
 - **19 LLM providers** with auto-discovery (llama.cpp, Ollama, LM Studio, OpenAI, Anthropic, Gemini, and more)
-- **210 verified features** across all categories
-- **86 built-in tools** for file operations, shell commands, web access, memory, security, and more
+- **82 built-in tools** for file operations, shell commands, web access, memory, security, and more
 - Interactive TUI with split panes, streaming, command palette
 - Web interface for browser/SSH tunnel access
-- 6-layer safety pipeline for all tool calls
+- 4-layer safety pipeline for all tool calls
 - KAIROS.md agentic instructions (like CLAUDE.md)
 - Swarm mode for parallel task execution
 - MCP (Model Context Protocol) support
@@ -179,7 +178,7 @@ kairos -p "hello" --provider auto
 | `glob` | read | Find files by pattern |
 | `grep` | read | Search file contents |
 | `http_fetch` | network | Fetch web content |
-| `web_search` | network | Search the web |
+| `web_search` | network | Search the web (Brave API / DuckDuckGo fallback) + fetch & extract |
 | `memory_ops` | read/write | Persistent memory |
 
 ## Agent Modes
@@ -188,13 +187,15 @@ kairos -p "hello" --provider auto
 |------|-------------|
 | NORMAL | Default mode with HITL for risky tools |
 | PLAN | Read-only analysis and planning |
+| ULTRAPLAN | Extended planning with deeper analysis |
 | AUTO | Auto-approve safe tools |
 | YOLO | Bypass all safety checks |
 | HEADLESS | No TUI, stdout/stderr only |
-| COMPOSE | 8-step autonomous pipeline |
 | SWARM | Parallel task execution |
+| DAEMON | Background process mode |
 | DREAM | Memory consolidation |
 | UNDERCOVER | Strip AI fingerprints |
+| VOICE | Voice interaction mode |
 
 ## KAIROS.md
 
@@ -275,16 +276,18 @@ src/
   llm/          Multi-provider LLM client with auto-discovery
   memory/       bun:sqlite with FTS5 full-text search
   tools/        Tool registry + builtin tools
-  security/     6-layer safety pipeline
+  security/     Safety pipeline (harm-detection, risk-classification, blueprint-policy, HITL)
   agent/        ReAct loop + Compose + Swarm + Dream + Undercover
   tui/          Terminal UI (Blessed widgets)
   cli/          CLI entry point + recursive descent parser
   daemon/       Background HTTP server with worker pool
   hooks/        EventBus + hook runner
   extensions/   Extension loader with Bun VM isolation
+  skills/       Skill runner (27 skills including web-search)
+  sdlc/         SDLC commands
   mcp/          Model Context Protocol client
   web/          Web interface server
-  utils/        Logger, paths, tokenizer
+  utils/        Logger, paths, path security, tokenizer, shell detection
 tests/          Test suite (bun:test)
 ```
 
@@ -312,14 +315,13 @@ bun run dist/cli.js -p "hello"
 
 ## Security
 
-All tool calls pass through a 6-layer safety pipeline:
+All tool calls pass through a safety pipeline:
 
 1. **Input Sanitization** - Strip control characters, null bytes
-2. **Harm Detection** - Block destructive commands
+2. **Harm Detection** - Block destructive commands and dangerous intent
 3. **Risk Classification** - Categorize as read/write/execute/network
-4. **Path Confinement** - Prevent path traversal
-5. **Network Protection** - Block private IPs, DNS rebinding
-6. **HITL Gate** - Require confirmation for risky operations
+4. **Blueprint Policy** - Path confinement and network protection (block private IPs, DNS rebinding)
+5. **HITL Gate** - Require confirmation for risky operations
 
 ## Environment Variables
 
@@ -336,6 +338,7 @@ All tool calls pass through a 6-layer safety pipeline:
 | `OPENAI_API_KEY` | OpenAI API key |
 | `ANTHROPIC_API_KEY` | Anthropic API key |
 | `GOOGLE_API_KEY` | Google Gemini API key |
+| `BRAVE_API_KEY` | Brave Search API key (enables Brave as primary search backend) |
 | `GROQ_API_KEY` | Groq API key |
 | `TOGETHER_API_KEY` | Together AI key |
 | `DEEPSEEK_API_KEY` | DeepSeek API key |

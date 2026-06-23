@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const LLMConfigSchema = z.object({
-  provider: z.enum(['llamacpp', 'openai', 'anthropic', 'ollama', 'gemini']).default('anthropic'),
+  provider: z.enum(['llamacpp', 'openai', 'anthropic', 'ollama', 'gemini', 'azure', 'groq', 'together', 'deepseek', 'mistral', 'perplexity', 'fireworks', 'openrouter', 'xai', 'cohere', 'replicate', 'lmstudio', 'oobabooga', 'localai']).default('anthropic'),
   model: z.string().min(1).default('claude-sonnet-4-20250514'),
   baseUrl: z.string().default('https://api.anthropic.com/v1'),
   apiKey: z.string().optional(),
@@ -72,6 +72,22 @@ export const ExtensionsConfigSchema = z.object({
   disabled: z.array(z.string()).default([]),
 });
 
+export const WebSearchConfigSchema = z.object({
+  provider: z.enum(['brave', 'duckduckgo', 'mimo', 'exa']).default('brave'),
+  braveApiKey: z.string().optional(),
+  mimoApiKey: z.string().optional(),
+  mimoBaseUrl: z.string().default('https://api.xiaomimimo.com/v1'),
+  mimoModel: z.string().default('mimo-v2.5'),
+  exaApiKey: z.string().optional(),
+  searchType: z.enum(['auto', 'fast', 'deep']).optional(),
+  livecrawl: z.enum(['fallback', 'preferred']).optional(),
+  contextMaxCharacters: z.number().optional(),
+  maxResults: z.number().int().min(1).max(20).default(5),
+  fetchContent: z.boolean().default(false),
+  fetchTimeout: z.number().int().positive().default(10000),
+  maxContentLength: z.number().int().positive().default(8000),
+});
+
 export const PathsConfigSchema = z.object({
   home: z.string().default(''),
   config: z.string().default(''),
@@ -94,6 +110,7 @@ export const KairosConfigSchema = z.object({
   hooks: HooksConfigSchema.default({}),
   extensions: ExtensionsConfigSchema.default({}),
   paths: PathsConfigSchema.default({}),
+  webSearch: WebSearchConfigSchema.default({}),
 });
 
 export type KairosConfig = z.infer<typeof KairosConfigSchema>;

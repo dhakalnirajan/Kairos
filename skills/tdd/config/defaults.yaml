@@ -1,0 +1,8 @@
+defaultFramework: vitest
+stateFile: .tdd-state.json
+frameworkDetectionOrder:
+  - bun-test
+  - vitest
+  - jest
+  - pytest
+blockOnUnresolvedCycle: true

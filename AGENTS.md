@@ -11,7 +11,7 @@ bun run build            # Bundle to dist/cli.js
 bun run typecheck        # tsc --noEmit (ALWAYS run before committing)
 bun test                 # Run all tests
 bun run setup            # First-run interactive wizard
-bun run -p "query"       # Headless one-shot query
+bun run src/cli.ts -p "query"  # Headless one-shot query
 bun run web              # Start web interface
 ```
 
@@ -25,16 +25,38 @@ This project includes production-grade engineering skills in `skills/` directory
 |-------|---------|-------------|
 | `tdd` | Test-driven development | Implementing logic, fixing bugs |
 | `code-review` | Multi-axis code review | Before merging any change |
-| `debugging` | Systematic root-cause debugging | When tests fail or behavior is unexpected |
+| `debug` | Systematic root-cause debugging | When tests fail or behavior is unexpected |
 | `security` | Security hardening | Handling user input, auth, external integrations |
 | `performance` | Performance optimization | When performance requirements exist |
+| `testing` | Test skill | Writing and running tests |
+| `simplify` | Code simplification | Reducing complexity |
+| `refactoring` | Refactoring skill | Restructuring code |
+| `plan` | Planning skill | Task planning |
+| `migration` | Migration/change management | Migrating code or data |
+| `documentation` | Documentation generation | Writing docs |
+| `deployment` | Deployment automation | Deploying applications |
+| `monitoring` | Monitoring & auditing | Observability |
+| `git-workflow` | Git workflow conventions | Version control |
+| `api-design` | API design conventions | Designing APIs |
+| `system-design` | System architecture design | Architecture decisions |
+| `code-generation` | Code generation templates | Generating code |
+| `code-analyzer` | Code graph analysis | Understanding code structure |
+| `accessibility` | WCAG/accessibility skill | Accessible UI |
+| `i18n` | Internationalization | Multi-language support |
+| `design-md` | Design doc generation | Writing design docs |
+| `design-to-code` | Design-to-code conversion | Converting designs to code |
+| `content-humanizer` | Content humanization | Making content natural |
+| `sdlc` | SDLC orchestration | Software development lifecycle |
+| `skill-creator` | Meta-skill for creating skills | Building new skills |
+| `obsidian-vault-architect` | Obsidian vault design | Note organization |
+| `web-search` | Search → fetch → summarize pipeline | Research with real-time web content |
 
 ### Usage
 
 Skills are activated automatically based on context, or can be invoked directly:
 - Implementing code → `tdd` skill activates
 - Reviewing code → `code-review` skill activates
-- Something broken → `debugging` skill activates
+- Something broken → `debug` skill activates
 - Security concerns → `security` skill activates
 - Performance issues → `performance` skill activates
 
@@ -46,19 +68,22 @@ src/
   config/       Zod schemas + hierarchical config loader
   llm/          Multi-provider LLM client (llamacpp, openai, ollama, anthropic, gemini, groq, etc.)
   memory/       bun:sqlite 7-table DB with FTS5 search
-  tools/        Tool registry + 68 builtin tools
+  tools/        Tool registry + 82 builtin tools
     builtin/    Individual tool implementations + index.ts (registration)
     registry.ts ToolRegistry class (register, execute, safety pipeline)
-  security/     6-layer safety pipeline (runs on every tool call)
+  security/     4-layer safety pipeline (runs on every tool call)
   agent/        ReAct loop + Compose 8-step pipeline + Swarm + Dream
   tui/          Blessed split-pane layout, streaming, overlays, mascot
   cli/          Entry point, CLI parser, setup wizard
   daemon/       Background process, watchdog, cron
   hooks/        EventBus + user hook runner
   extensions/   Extension/skill loader (isolated Bun VM)
+  skills/       Skill runner (27 skills including web-search)
+  sdlc/         SDLC commands
+  web/          Web interface server
   mcp/          Model Context Protocol client
-  utils/        Logger, paths, tokenizer, shell detection
-tests/          26 test files, ~66 tests total
+  utils/        Logger, paths, path security, tokenizer, shell detection
+tests/          26 test files, ~214 tests total
 ```
 
 **Entry point:** `src/cli.ts` → `src/cli/commands.ts` → branches to TUI/headless/web/daemon
@@ -89,7 +114,7 @@ tests/          26 test files, ~66 tests total
 - **Types**: Strict mode. No `any` types. `noUncheckedIndexedAccess` enabled.
 - **TUI**: `@blessed/neo-blessed` with `tags: true` for color markup. Style objects must be complete (fg, bg, bold, etc.).
 - **Config order**: CLI flags > env vars > project `.kairos/config.json` > global `~/.kairos/config.json` > defaults.
-- **Safety**: All tool calls pass through 6-layer pipeline. HITL enforced for write/execute/network in NORMAL mode.
+- **Safety**: All tool calls pass through 4-layer pipeline. HITL enforced for write/execute/network in NORMAL mode.
 - **Paths**: Windows-compatible. Use `path` module, never hardcoded `/` or `\\`.
 
 ## Conventions
@@ -104,7 +129,7 @@ tests/          26 test files, ~66 tests total
 
 ## Testing
 
-- `bun test` runs all 66 tests across 26 files
+- `bun test` runs all 214 tests across 26 files
 - Local model tests (`tests/local-models.test.ts`) skip when services unavailable — this is expected
 - Run specific test: `bun test tests/safety.test.ts`
 - Test a single tool: check `tests/tools.test.ts` or `tests/tools_extended.test.ts`
@@ -120,6 +145,6 @@ tests/          26 test files, ~66 tests total
 - `src/tools/builtin/index.ts` — Tool registration (TOOL_LOADERS array)
 - `src/config/schema.ts` — Zod config schema
 - `src/config/index.ts` — Config loader with env var and CLI flag overrides
-- `src/security/pipeline.ts` — 6-layer safety pipeline
+- `src/security/pipeline.ts` — Safety pipeline (harm-detection, risk-classification, blueprint-policy, HITL)
 - `src/agent/loop.ts` — ReAct agent loop
 - `src/tui/index.ts` — TUI slash command handlers

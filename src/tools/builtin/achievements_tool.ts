@@ -1,5 +1,5 @@
 import type { ToolInstance, ToolContext, ToolResult } from '../../types/tools.ts';
-import { achievementSystem } from '../achievements.ts';
+import { achievementSystem } from '../session/achievements.ts';
 
 export const achievementsTool: ToolInstance = {
   name: 'achievements',

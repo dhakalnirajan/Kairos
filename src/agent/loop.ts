@@ -6,6 +6,7 @@ import type { MemoryDatabase } from '../memory/database.ts';
 import { estimateTokens } from '../utils/tokenizer.ts';
 import { eventBus } from '../hooks/bus.ts';
 import { join } from 'path';
+import { SkillRunner } from '../skills/runner.ts';
 
 export interface AgentLoopConfig {
   maxIterations: number;
@@ -236,6 +237,17 @@ export class AgentLoop {
       .map((t) => `- ${t.name}: ${t.description} (risk: ${t.riskLevel})`)
       .join('\n');
 
+    let skillDescriptions = '';
+    try {
+      const skillRunner = new SkillRunner();
+      await skillRunner.loadAllSkills();
+      const skills = skillRunner.getAllSkills();
+      if (skills.length > 0) {
+        skillDescriptions = '\n\nAvailable skills (use the skill_runner tool to invoke them):\n' +
+          skills.map((s) => `- ${s.name} (${s.category}): ${s.description}`).join('\n');
+      }
+    } catch {}
+
     let kairosMd = '';
     try {
       const kairosPath = join(this.loopConfig.workspaceRoot, 'KAIROS.md');
@@ -254,6 +266,7 @@ Mode: ${this.loopConfig.mode}
 
 Available tools:
 ${toolDescriptions}
+${skillDescriptions}
 
 To use a tool, respond with a JSON code block:
 \`\`\`tool
@@ -276,6 +289,7 @@ ${modeInstructions[this.loopConfig.mode] ?? modeInstructions['NORMAL']}
 
 Available tools:
 ${toolDescriptions}
+${skillDescriptions}
 
 IMPORTANT: Only use tools when the user explicitly asks you to read/write files, run commands, or perform actions. For simple questions like math, greetings, explanations, or general knowledge - answer directly WITHOUT using any tools.
 

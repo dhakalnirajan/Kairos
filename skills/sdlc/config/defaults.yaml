@@ -1,0 +1,7 @@
+defaultMode: plan-only
+defaultBase: main
+verifyStages:
+  - testing
+  - code-review
+  - security
+skillsDirRelative: ".."

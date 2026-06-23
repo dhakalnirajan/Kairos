@@ -1,0 +1,1 @@
+--template route-handler --name getUserProfile --method GET --path /api/users/:id --output src/routes/user.ts

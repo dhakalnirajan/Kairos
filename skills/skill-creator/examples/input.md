@@ -1,0 +1,1 @@
+--name api-rate-limiter --description "Checks API endpoints for missing rate limiting" --category analysis

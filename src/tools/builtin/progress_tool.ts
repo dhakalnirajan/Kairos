@@ -1,5 +1,5 @@
 import type { ToolInstance, ToolContext, ToolResult } from '../../types/tools.ts';
-import { ProgressBar } from '../progress.ts';
+import { ProgressBar } from '../session/progress.ts';
 
 const activeProgress = new Map<string, ProgressBar>();
 

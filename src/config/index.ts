@@ -34,10 +34,15 @@ function applyEnvVars(config: KairosConfig): KairosConfig {
   const result = { ...config };
   
   const provider = process.env.KAIROS_LLM_PROVIDER;
-  if (provider && ['llamacpp', 'openai', 'anthropic', 'ollama'].includes(provider)) {
-    const providerKey = provider as 'llamacpp' | 'openai' | 'anthropic' | 'ollama';
-    const defaults = PROVIDER_DEFAULTS[providerKey]!;
-    result.llm = { ...result.llm, provider: providerKey, baseUrl: defaults.baseUrl };
+  const validProviders = ['llamacpp', 'openai', 'anthropic', 'ollama', 'gemini', 'azure', 'groq', 'together', 'deepseek', 'mistral', 'perplexity', 'fireworks', 'openrouter', 'xai', 'cohere', 'replicate', 'lmstudio', 'oobabooga', 'localai'] as const;
+  if (provider && (validProviders as readonly string[]).includes(provider)) {
+    const providerKey = provider as typeof validProviders[number];
+    const defaults = PROVIDER_DEFAULTS[providerKey];
+    if (defaults) {
+      result.llm = { ...result.llm, provider: providerKey, baseUrl: defaults.baseUrl };
+    } else {
+      result.llm = { ...result.llm, provider: providerKey };
+    }
   }
   
   const model = process.env.KAIROS_LLM_MODEL;
@@ -93,7 +98,22 @@ function applyEnvVars(config: KairosConfig): KairosConfig {
       result.daemon = { ...result.daemon, port: parsed };
     }
   }
-  
+
+  const braveApiKey = process.env.BRAVE_API_KEY;
+  if (braveApiKey) {
+    result.webSearch = { ...result.webSearch, braveApiKey };
+  }
+
+  const mimoApiKey = process.env.MIMO_API_KEY;
+  if (mimoApiKey) {
+    result.webSearch = { ...result.webSearch, mimoApiKey };
+  }
+
+  const exaApiKey = process.env.EXA_API_KEY;
+  if (exaApiKey) {
+    result.webSearch = { ...result.webSearch, exaApiKey };
+  }
+
   return result;
 }
 
@@ -102,15 +122,35 @@ const PROVIDER_DEFAULTS: Record<string, { baseUrl: string; model: string }> = {
   openai: { baseUrl: 'https://api.openai.com/v1', model: 'gpt-4o' },
   ollama: { baseUrl: 'http://localhost:11434', model: 'llama3' },
   anthropic: { baseUrl: 'https://api.anthropic.com/v1', model: 'claude-3-5-sonnet-20241022' },
+  gemini: { baseUrl: 'https://generativelanguage.googleapis.com/v1beta', model: 'gemini-1.5-pro' },
+  azure: { baseUrl: '', model: 'gpt-4o' },
+  groq: { baseUrl: 'https://api.groq.com/openai/v1', model: 'llama3-70b-8192' },
+  together: { baseUrl: 'https://api.together.xyz/v1', model: 'meta-llama/Llama-3-70b-chat-hf' },
+  deepseek: { baseUrl: 'https://api.deepseek.com/v1', model: 'deepseek-chat' },
+  mistral: { baseUrl: 'https://api.mistral.ai/v1', model: 'mistral-large-latest' },
+  perplexity: { baseUrl: 'https://api.perplexity.ai', model: 'llama-3-sonar-large-32k-online' },
+  fireworks: { baseUrl: 'https://api.fireworks.ai/inference/v1', model: 'accounts/fireworks/models/llama-v3p1-70b-instruct' },
+  openrouter: { baseUrl: 'https://openrouter.ai/api/v1', model: 'meta-llama/llama-3-70b-instruct' },
+  xai: { baseUrl: 'https://api.x.ai/v1', model: 'grok-beta' },
+  cohere: { baseUrl: 'https://api.cohere.ai/v2', model: 'command-r-plus' },
+  replicate: { baseUrl: 'https://api.replicate.com/v1', model: 'meta/meta-llama-3-70b-instruct' },
+  lmstudio: { baseUrl: 'http://localhost:1234/v1', model: 'local' },
+  oobabooga: { baseUrl: 'http://localhost:5000/v1', model: 'local' },
+  localai: { baseUrl: 'http://localhost:8080/v1', model: 'local' },
 };
 
 function applyCliFlags(config: KairosConfig, cliArgs: Record<string, string>): KairosConfig {
   const result = { ...config };
   
-  if (cliArgs.provider && ['llamacpp', 'openai', 'anthropic', 'ollama'].includes(cliArgs.provider)) {
-    const provider = cliArgs.provider as 'llamacpp' | 'openai' | 'anthropic' | 'ollama';
-    const defaults = PROVIDER_DEFAULTS[provider]!;
-    result.llm = { ...result.llm, provider, baseUrl: defaults.baseUrl };
+  const validProviders = ['llamacpp', 'openai', 'anthropic', 'ollama', 'gemini', 'azure', 'groq', 'together', 'deepseek', 'mistral', 'perplexity', 'fireworks', 'openrouter', 'xai', 'cohere', 'replicate', 'lmstudio', 'oobabooga', 'localai'] as const;
+  if (cliArgs.provider && (validProviders as readonly string[]).includes(cliArgs.provider)) {
+    const provider = cliArgs.provider as typeof validProviders[number];
+    const defaults = PROVIDER_DEFAULTS[provider];
+    if (defaults) {
+      result.llm = { ...result.llm, provider, baseUrl: defaults.baseUrl };
+    } else {
+      result.llm = { ...result.llm, provider };
+    }
   }
   
   if (cliArgs.model) {

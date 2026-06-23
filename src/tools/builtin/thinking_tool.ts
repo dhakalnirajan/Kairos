@@ -1,5 +1,5 @@
 import type { ToolInstance, ToolContext, ToolResult } from '../../types/tools.ts';
-import { thinkingTransparency } from '../thinking.ts';
+import { thinkingTransparency } from '../ux/thinking.ts';
 
 export const thinkingTool: ToolInstance = {
   name: 'thinking',

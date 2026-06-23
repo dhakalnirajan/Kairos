@@ -1,0 +1,7 @@
+defaultFramework: vitest
+coverageDefault: false
+frameworkCommands:
+  bun-test: ["bun", "test"]
+  vitest: ["npx", "vitest", "run"]
+  jest: ["npx", "jest"]
+  pytest: ["pytest", "-q"]

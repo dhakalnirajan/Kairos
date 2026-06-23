@@ -1,0 +1,17 @@
+validCategories:
+  - analysis
+  - automation
+  - code-generation
+  - deployment
+  - testing
+  - documentation
+namePattern: "^[a-z][a-z0-9-]*$"
+defaultAuthor: harness-core
+defaultVersion: 1.0.0
+requiredManifestFields:
+  - name
+  - version
+  - description
+  - author
+  - category
+  - entrypoint

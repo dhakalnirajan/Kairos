@@ -1,0 +1,11 @@
+excludeDirs:
+  - .git
+  - node_modules
+  - dist
+  - build
+checks:
+  secrets: true
+  sqlInjection: true
+  commandInjection: true
+  dependencies: true
+knownVulnerableList: references/known-vulnerable.json

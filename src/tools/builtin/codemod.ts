@@ -1,3 +1,3 @@
-import { createCodemodTool } from "../codemod.ts";
+import { createCodemodTool } from "../analysis/codemod.ts";
 
 export const codemodTool = createCodemodTool();

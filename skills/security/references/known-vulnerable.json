@@ -1,0 +1,32 @@
+[
+  {
+    "package": "lodash",
+    "vulnerableBelow": "4.17.21",
+    "severity": "high",
+    "note": "Prototype pollution in earlier versions (CVE-2020-8203 and related)."
+  },
+  {
+    "package": "minimist",
+    "vulnerableBelow": "1.2.6",
+    "severity": "high",
+    "note": "Prototype pollution via crafted argument parsing (CVE-2021-44906)."
+  },
+  {
+    "package": "node-fetch",
+    "vulnerableBelow": "2.6.7",
+    "severity": "medium",
+    "note": "Exposure of sensitive headers on redirect (CVE-2022-0235 and related)."
+  },
+  {
+    "package": "express",
+    "vulnerableBelow": "4.17.3",
+    "severity": "medium",
+    "note": "Open redirect / qs-related issues patched in later 4.x releases."
+  },
+  {
+    "package": "axios",
+    "vulnerableBelow": "0.21.2",
+    "severity": "high",
+    "note": "SSRF via crafted redirect handling (CVE-2021-3749 and related)."
+  }
+]

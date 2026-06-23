@@ -1,5 +1,5 @@
 import type { ToolInstance, ToolContext, ToolResult } from '../../types/tools.ts';
-import { SessionRecorder } from '../session.ts';
+import { SessionRecorder } from '../session/session.ts';
 
 const activeRecorders = new Map<string, SessionRecorder>();
 

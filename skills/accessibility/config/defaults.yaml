@@ -1,0 +1,12 @@
+checks:
+  missingAlt: true
+  unlabeledInputs: true
+  clickableNonSemantic: true
+excludeDirs:
+  - .git
+  - node_modules
+  - dist
+  - build
+fileExtensions:
+  - .vue
+  - .html

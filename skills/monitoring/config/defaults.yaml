@@ -1,0 +1,11 @@
+audit:
+  flagSilentCatch: true
+  flagUnguardedAsync: true
+scaffold:
+  defaultFramework: express
+  overwriteRequiresForce: true
+excludeDirs:
+  - .git
+  - node_modules
+  - dist
+  - build

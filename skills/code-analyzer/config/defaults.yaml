@@ -1,0 +1,11 @@
+checks:
+  - cycles
+  - unused-exports
+  - hotspots
+excludeDirs:
+  - .git
+  - node_modules
+  - dist
+  - build
+excludeTestFiles: true
+defaultTopHotspots: null

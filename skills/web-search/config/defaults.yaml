@@ -1,0 +1,39 @@
+# web-search skill configuration
+# Place your backend settings here. The skill reads this file at runtime.
+
+userAgent: harness-web-search/1.0
+
+# ---------------------------------------------------------------------------
+# Generic search backend (fallback when BRAVE_SEARCH_API_KEY is not set).
+# Fill in the URL template and optionally add request headers.
+#
+# Supported placeholder tokens in url:
+#   {query}  — URL-encoded search query
+#   {count}  — number of results requested
+#
+# Example: DuckDuckGo Instant Answer API (limited, no full web results)
+#   url: https://api.duckduckgo.com/?q={query}&format=json&no_redirect=1
+#   resultsPath: RelatedTopics
+#   titleField: Text
+#   urlField: FirstURL
+#   descriptionField: Text
+#
+# Example: Serper.dev (Google results, requires SERPER_API_KEY header)
+#   url: https://google.serper.dev/search?q={query}&num={count}
+#   resultsPath: organic
+#   titleField: title
+#   urlField: link
+#   descriptionField: snippet
+#
+# Uncomment and configure one block below, or leave commented to require
+# BRAVE_SEARCH_API_KEY instead.
+# ---------------------------------------------------------------------------
+
+# genericSearch:
+#   url: "https://your-search-api.example.com/search?q={query}&count={count}"
+#   resultsPath: results
+#   titleField: title
+#   urlField: url
+#   descriptionField: snippet
+#   headers:
+#     Authorization: "Bearer YOUR_API_KEY_HERE"

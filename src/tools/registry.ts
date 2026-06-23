@@ -60,6 +60,6 @@ export class ToolRegistry {
       };
     }
 
-    return tool.execute(params, ctx);
+    return tool.execute(params, { ...ctx, config: config as unknown as Record<string, unknown> });
   }
 }

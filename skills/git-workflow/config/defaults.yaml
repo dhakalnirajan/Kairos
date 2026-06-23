@@ -1,0 +1,9 @@
+branchPattern: "^(feat|fix|chore|docs)\\/[a-z0-9-]+$"
+defaultBase: main
+commitTypes:
+  - feat
+  - fix
+  - docs
+  - refactor
+  - test
+  - chore

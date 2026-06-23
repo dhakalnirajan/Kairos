@@ -1,0 +1,10 @@
+requireAlternatives: false
+warnOnMissingAlternatives: true
+sections:
+  - Problem
+  - Goals
+  - Non-Goals
+  - Proposed Approach
+  - Alternatives Considered
+  - Tradeoffs
+  - Open Questions

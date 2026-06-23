@@ -1,0 +1,14 @@
+defaultBase: main
+severityLevels:
+  - blocking
+  - should-fix
+  - nit
+checks:
+  scopeCreep: true
+  missingTests: true
+  namingConsistency: true
+  obviousSmells: true
+smellPatterns:
+  consoleLog: true
+  todoFixme: true
+  emptyCatch: true
