@@ -89,7 +89,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Kairos Code. Built with Docusaurus. MIT License.`,
+      copyright: `© ${new Date().getFullYear()} Kairos Code. Built with Docusaurus. MIT License.`,
     },
     prism: {
       theme: prismThemes.github,

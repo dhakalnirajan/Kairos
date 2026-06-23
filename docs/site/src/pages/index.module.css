@@ -10,6 +10,7 @@
   height: 100px;
   margin-bottom: 1.5rem;
   border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 @media screen and (max-width: 996px) {
@@ -27,6 +28,61 @@
 .features {
   display: flex;
   align-items: center;
-  padding: 2rem 0;
+  padding: 3rem 0 1rem;
   width: 100%;
+}
+
+.featureLink {
+  text-decoration: none;
+  color: inherit;
+}
+
+.featureCard {
+  text-align: center;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--ifm-border-color);
+  background: var(--ifm-background-surface-color);
+  transition: transform 0.2s, box-shadow 0.2s;
+  height: 100%;
+}
+
+.featureCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.featureIcon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.quickLinks {
+  padding: 1rem 0 3rem;
+  width: 100%;
+}
+
+.quickLink {
+  text-decoration: none;
+  color: inherit;
+}
+
+.quickLinkCard {
+  padding: 1.25rem;
+  border-radius: 8px;
+  border: 1px solid var(--ifm-border-color);
+  background: var(--ifm-background-surface-color);
+  transition: transform 0.2s, box-shadow 0.2s;
+  height: 100%;
+}
+
+.quickLinkCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.quickLinkIcon {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  display: block;
 }

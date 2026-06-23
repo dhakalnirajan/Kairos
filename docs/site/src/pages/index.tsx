@@ -31,21 +31,93 @@ function HomepageHeader() {
 }
 
 const features = [
-  { title: '19 LLM Providers', description: 'Run with llama.cpp, Ollama, OpenAI, Anthropic, Gemini, Groq, and more.' },
-  { title: '82 Built-in Tools', description: 'File operations, shell commands, web search, AST analysis, debugging, and more.' },
-  { title: '4-Layer Safety', description: 'Harm detection, risk classification, blueprint policy, and HITL for every tool call.' },
-  { title: 'Persistent Memory', description: 'SQLite-backed memory with FTS5 full-text search across sessions.' },
-  { title: '27 Skills', description: 'TDD, code review, security, deployment, research, and more.' },
-  { title: 'Telegram Bot', description: 'Full-featured messaging with streaming, groups, webhook support.' },
+  {
+    icon: '⚡',
+    title: '19 LLM Providers',
+    description: 'Run with llama.cpp, Ollama, OpenAI, Anthropic, Gemini, Groq, and more.',
+    link: '/docs/user-guide/providers',
+  },
+  {
+    icon: '🔧',
+    title: '82 Built-in Tools',
+    description: 'File operations, shell commands, web search, AST analysis, debugging, and more.',
+    link: '/docs/user-guide/tools',
+  },
+  {
+    icon: '🛡️',
+    title: '4-Layer Safety',
+    description: 'Harm detection, risk classification, blueprint policy, and HITL for every tool call.',
+    link: '/docs/user-guide/safety',
+  },
+  {
+    icon: '🧠',
+    title: 'Persistent Memory',
+    description: 'SQLite-backed memory with FTS5 full-text search across sessions.',
+    link: '/docs/user-guide/memory',
+  },
+  {
+    icon: '📦',
+    title: '27 Skills',
+    description: 'TDD, code review, security, deployment, research, and more.',
+    link: '/docs/user-guide/skills',
+  },
+  {
+    icon: '📱',
+    title: 'Telegram Bot',
+    description: 'Full-featured messaging with streaming, groups, webhook support.',
+    link: '/docs/user-guide/telegram',
+  },
+  {
+    icon: '🌐',
+    title: 'Web Interface',
+    description: 'Browser-based chat with streaming responses and tool execution.',
+    link: '/docs/user-guide/tui',
+  },
+  {
+    icon: '🔍',
+    title: 'Web Search',
+    description: 'Brave API, Exa MCP, Mimo API, DuckDuckGo with auto-fallback.',
+    link: '/docs/user-guide/tools',
+  },
+  {
+    icon: '🖥️',
+    title: 'Terminal TUI',
+    description: 'Split panes, streaming, command palette, and themes.',
+    link: '/docs/user-guide/tui',
+  },
 ];
 
-function Feature({title, description}: {title: string; description: string}) {
+function Feature({icon, title, description, link}: {icon: string; title: string; description: string; link: string}) {
   return (
     <div className={clsx('col col--4')}>
-      <div className="text--center padding-horiz--md padding-vert--lg">
-        <Heading as="h3">{title}</Heading>
-        <p>{description}</p>
-      </div>
+      <Link to={link} className={styles.featureLink}>
+        <div className={styles.featureCard}>
+          <div className={styles.featureIcon}>{icon}</div>
+          <Heading as="h3">{title}</Heading>
+          <p>{description}</p>
+        </div>
+      </Link>
+    </div>
+  );
+}
+
+const quickLinks = [
+  { title: 'Quick Start', description: 'Install and run your first session in 5 minutes', link: '/docs/getting-started', icon: '🚀' },
+  { title: 'Configuration', description: 'Config files, environment variables, CLI flags', link: '/docs/user-guide/configuration', icon: '⚙️' },
+  { title: 'Telegram Setup', description: 'Connect Kairos to Telegram for mobile access', link: '/docs/user-guide/telegram', icon: '💬' },
+  { title: 'All Commands', description: '111+ slash commands for the TUI and web', link: '/docs/user-guide/slash-commands', icon: '⌨️' },
+];
+
+function QuickLink({title, description, link, icon}: {title: string; description: string; link: string; icon: string}) {
+  return (
+    <div className={clsx('col col--3')}>
+      <Link to={link} className={styles.quickLink}>
+        <div className={styles.quickLinkCard}>
+          <span className={styles.quickLinkIcon}>{icon}</span>
+          <Heading as="h4">{title}</Heading>
+          <p>{description}</p>
+        </div>
+      </Link>
     </div>
   );
 }
@@ -58,8 +130,17 @@ export default function Home(): ReactNode {
       <main>
         <section className={styles.features}>
           <div className="container">
+            <Heading as="h2" className="text--center" style={{marginBottom: '2rem'}}>Features</Heading>
             <div className="row">
               {features.map((props, idx) => <Feature key={idx} {...props} />)}
+            </div>
+          </div>
+        </section>
+        <section className={styles.quickLinks}>
+          <div className="container">
+            <Heading as="h2" className="text--center" style={{marginBottom: '2rem'}}>Quick Links</Heading>
+            <div className="row">
+              {quickLinks.map((props, idx) => <QuickLink key={idx} {...props} />)}
             </div>
           </div>
         </section>
