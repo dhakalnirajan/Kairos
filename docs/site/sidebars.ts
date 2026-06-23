@@ -21,6 +21,7 @@ const sidebars: SidebarsConfig = {
         'user-guide/tools',
         'user-guide/skills',
         'user-guide/tui',
+        'user-guide/telegram',
       ],
     },
     {

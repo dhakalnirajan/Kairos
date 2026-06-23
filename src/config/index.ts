@@ -114,6 +114,39 @@ function applyEnvVars(config: KairosConfig): KairosConfig {
     result.webSearch = { ...result.webSearch, exaApiKey };
   }
 
+  const telegramToken = process.env.TELEGRAM_BOT_TOKEN;
+  if (telegramToken) {
+    result.telegram = { ...result.telegram, enabled: true, token: telegramToken };
+  }
+
+  const telegramUsers = process.env.TELEGRAM_ALLOWED_USERS;
+  if (telegramUsers) {
+    const ids = telegramUsers.split(',').map(Number).filter(n => !isNaN(n));
+    if (ids.length > 0) result.telegram = { ...result.telegram, allowedUserIds: ids };
+  }
+
+  const telegramChats = process.env.TELEGRAM_ALLOWED_CHATS;
+  if (telegramChats) {
+    const ids = telegramChats.split(',').map(Number).filter(n => !isNaN(n));
+    if (ids.length > 0) result.telegram = { ...result.telegram, allowedChats: ids };
+  }
+
+  const telegramWebhookUrl = process.env.TELEGRAM_WEBHOOK_URL;
+  if (telegramWebhookUrl) {
+    result.telegram = { ...result.telegram, webhookUrl: telegramWebhookUrl };
+  }
+
+  const telegramWebhookSecret = process.env.TELEGRAM_WEBHOOK_SECRET;
+  if (telegramWebhookSecret) {
+    result.telegram = { ...result.telegram, webhookSecret: telegramWebhookSecret };
+  }
+
+  const telegramHomeChannel = process.env.TELEGRAM_HOME_CHANNEL;
+  if (telegramHomeChannel) {
+    const id = Number(telegramHomeChannel);
+    if (!isNaN(id)) result.telegram = { ...result.telegram, homeChannel: id };
+  }
+
   return result;
 }
 

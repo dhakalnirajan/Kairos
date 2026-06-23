@@ -99,6 +99,20 @@ export const PathsConfigSchema = z.object({
   extensions: z.string().default(''),
 });
 
+export const TelegramConfigSchema = z.object({
+  enabled: z.boolean().default(false),
+  token: z.string().optional(),
+  allowedUserIds: z.array(z.number()).optional(),
+  allowedChats: z.array(z.number()).optional(),
+  requireMention: z.boolean().default(false),
+  mentionPatterns: z.array(z.string()).default([]),
+  streaming: z.boolean().default(true),
+  webhookUrl: z.string().optional(),
+  webhookSecret: z.string().optional(),
+  webhookPort: z.number().int().min(1024).max(65535).default(8443),
+  homeChannel: z.number().optional(),
+});
+
 export const KairosConfigSchema = z.object({
   version: z.string().default('0.1.1'),
   llm: LLMConfigSchema.default({}),
@@ -111,6 +125,7 @@ export const KairosConfigSchema = z.object({
   extensions: ExtensionsConfigSchema.default({}),
   paths: PathsConfigSchema.default({}),
   webSearch: WebSearchConfigSchema.default({}),
+  telegram: TelegramConfigSchema.default({}),
 });
 
 export type KairosConfig = z.infer<typeof KairosConfigSchema>;

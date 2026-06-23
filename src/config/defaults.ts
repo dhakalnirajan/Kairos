@@ -91,6 +91,13 @@ export const DEFAULT_CONFIG: KairosConfig = {
     fetchTimeout: 10000,
     maxContentLength: 8000,
   },
+  telegram: {
+    enabled: false,
+    requireMention: false,
+    mentionPatterns: [],
+    streaming: true,
+    webhookPort: 8443,
+  },
 };
 
 export function getDefaultConfigPath(): string {

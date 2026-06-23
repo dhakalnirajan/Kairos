@@ -37,6 +37,10 @@ export async function main(argv: string[]): Promise<void> {
       await startWebMode(args);
       return;
 
+    case 'telegram':
+      await startTelegramMode(args);
+      return;
+
     case 'auth':
       await handleAuth(args);
       return;
@@ -240,6 +244,73 @@ async function startWebMode(args: ReturnType<typeof parseArgs>): Promise<void> {
   await startWebServer(config, { port, host });
 }
 
+async function startTelegramMode(args: ReturnType<typeof parseArgs>): Promise<void> {
+  const { TelegramBot } = await import('../telegram/bot.ts');
+  const config = await loadConfig(args.flags as Record<string, string>);
+
+  if (!config.telegram.token && !process.env.TELEGRAM_BOT_TOKEN) {
+    console.error('\x1b[31mError: Telegram bot token not configured.\x1b[0m');
+    console.log('Set TELEGRAM_BOT_TOKEN env var or configure telegram.token in config.json');
+    console.log('\nTo create a bot:');
+    console.log('1. Open Telegram and search for @BotFather');
+    console.log('2. Send /newbot and follow the prompts');
+    console.log('3. Copy the API token');
+    console.log('4. Set it: export TELEGRAM_BOT_TOKEN=your_token_here\n');
+    process.exit(1);
+  }
+
+  const token = config.telegram.token || process.env.TELEGRAM_BOT_TOKEN!;
+  const allowedUsers = config.telegram.allowedUserIds
+    || (process.env.TELEGRAM_ALLOWED_USERS ? process.env.TELEGRAM_ALLOWED_USERS.split(',').map(Number).filter(n => !isNaN(n)) : undefined);
+
+  const bot = new TelegramBot(config, {
+    token,
+    allowedUserIds: allowedUsers,
+    allowedChats: config.telegram.allowedChats,
+    requireMention: config.telegram.requireMention,
+    mentionPatterns: config.telegram.mentionPatterns,
+    maxConcurrent: 4,
+    messageTimeout: 30000,
+    streamingEnabled: config.telegram.streaming,
+    webhookUrl: config.telegram.webhookUrl || process.env.TELEGRAM_WEBHOOK_URL,
+    webhookSecret: config.telegram.webhookSecret || process.env.TELEGRAM_WEBHOOK_SECRET,
+    webhookPort: config.telegram.webhookPort,
+    homeChannel: config.telegram.homeChannel,
+  });
+
+  console.log(`\x1b[36mKairos Code Telegram Bot\x1b[0m`);
+  console.log(`Provider: ${config.llm.provider} | Model: ${config.llm.model}`);
+  console.log(`Streaming: ${config.telegram.streaming ? 'enabled' : 'disabled'}`);
+  if (config.telegram.webhookUrl) {
+    console.log(`Mode: webhook (port ${config.telegram.webhookPort})`);
+  } else {
+    console.log('Mode: long polling');
+  }
+  if (allowedUsers && allowedUsers.length > 0) {
+    console.log(`Authorized users: ${allowedUsers.join(', ')}`);
+  } else {
+    console.log('\x1b[33mWarning: No user restrictions — anyone can interact with the bot\x1b[0m');
+  }
+  console.log('');
+
+  try {
+    await bot.start();
+  } catch (e) {
+    console.error(`\x1b[31mFailed to start bot: ${e}\x1b[0m`);
+    process.exit(1);
+  }
+
+  process.on('SIGINT', async () => {
+    console.log('\nShutting down...');
+    await bot.stop();
+    process.exit(0);
+  });
+  process.on('SIGTERM', async () => {
+    await bot.stop();
+    process.exit(0);
+  });
+}
+
 async function handleAuth(args: ReturnType<typeof parseArgs>): Promise<void> {
   const action = args.positional[0];
   console.log(`Auth ${action} - not yet implemented`);
@@ -338,6 +409,7 @@ Usage:
   bun run src/cli.ts --no-tui     Start readline REPL (no TUI)
   bun run src/cli.ts -p "query"   Headless one-shot query
   bun run src/cli.ts web          Start web interface (port 3333)
+  bun run src/cli.ts telegram     Start Telegram bot
   bun run src/cli.ts setup        First-run interactive wizard
   bun run src/cli.ts daemon       Start background daemon
   bun run src/cli.ts provider list     List all providers
@@ -353,5 +425,9 @@ Flags:
   --daemon                       Start as daemon
   --help                         Show this help
   --version                      Show version
+
+Telegram:
+  Set TELEGRAM_BOT_TOKEN env var or configure telegram.token in config.json
+  Optional: TELEGRAM_ALLOWED_USERS, TELEGRAM_WEBHOOK_URL, TELEGRAM_WEBHOOK_SECRET
   `);
 }
