@@ -15,12 +15,12 @@ Kairos features a beautiful terminal UI built with neo-blessed.
 │ Status Bar (mode, model, tokens, cost)                      │
 ├──────────────────────────────┬──────────────────────────────┤
 │                              │ Context                      │
-│  Chat Panel                  │ ├─ Session Info               │
+│  Chat Panel                  │ ├─ Session Info              │
 │  (conversation history)      │ ├─ Memory                    │
 │                              │ └─ Tools                     │
 │                              │                              │
 ├──────────────────────────────┴──────────────────────────────┤
-│ Input (type here, Enter to send, ↑/↓ for history)          │
+│ Input (type here, Enter to send, ↑/↓ for history)           │
 └─────────────────────────────────────────────────────────────┘
 ```
 

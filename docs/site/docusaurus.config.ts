@@ -4,8 +4,8 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'Kairos Code',
-  tagline: 'Terminal-native AI coding agent. Bun runtime, Blessed TUI, SQLite memory, multi-provider LLM.',
-  favicon: 'img/favicon.ico',
+  tagline: 'Terminal-native AI coding agent. Local-first, extensible, secure.',
+  favicon: 'img/logo.png',
 
   future: {
     v4: false,
@@ -41,7 +41,7 @@ const config: Config = {
   ],
 
   themeConfig: {
-    image: 'img/kairos-social-card.png',
+    image: 'img/logo.png',
     colorMode: {
       defaultMode: 'dark',
       respectPrefersColorScheme: true,
@@ -49,8 +49,8 @@ const config: Config = {
     navbar: {
       title: 'Kairos Code',
       logo: {
-        alt: 'Kairos Logo',
-        src: 'img/logo.svg',
+        alt: 'Kairos Code Logo',
+        src: 'img/logo.png',
       },
       items: [
         {
@@ -74,6 +74,7 @@ const config: Config = {
           items: [
             { label: 'Getting Started', to: '/docs/intro' },
             { label: 'Configuration', to: '/docs/user-guide/configuration' },
+            { label: 'Providers', to: '/docs/user-guide/providers' },
             { label: 'Tools', to: '/docs/user-guide/tools' },
           ],
         },
