@@ -7,10 +7,6 @@ const config: Config = {
   tagline: 'Terminal-native AI coding agent. Local-first, extensible, secure.',
   favicon: 'img/logo.png',
 
-  future: {
-    v4: false,
-  },
-
   url: 'https://dhakalnirajan.github.io',
   baseUrl: '/Kairos/',
 
@@ -47,9 +43,9 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'Kairos Code',
+      title: 'Kairos',
       logo: {
-        alt: 'Kairos Code Logo',
+        alt: 'Kairos Code',
         src: 'img/logo.png',
       },
       items: [
@@ -75,7 +71,7 @@ const config: Config = {
             { label: 'Getting Started', to: '/docs/intro' },
             { label: 'Configuration', to: '/docs/user-guide/configuration' },
             { label: 'Providers', to: '/docs/user-guide/providers' },
-            { label: 'Tools', to: '/docs/user-guide/tools' },
+            { label: 'Telegram', to: '/docs/user-guide/telegram' },
           ],
         },
         {
@@ -93,7 +89,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright ${new Date().getFullYear()} Kairos Code. MIT License.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Kairos Code. Built with Docusaurus. MIT License.`,
     },
     prism: {
       theme: prismThemes.github,

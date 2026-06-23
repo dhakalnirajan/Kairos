@@ -4,15 +4,15 @@ sidebar_position: 0
 description: Terminal-native AI coding agent. Local-first, extensible, secure.
 ---
 
-# Kairos Code
-
 <div style={{textAlign: 'center', marginBottom: '2rem'}}>
-  <img src="/Kairos/img/logo.png" alt="Kairos Code" style={{width: '120px', height: '120px'}} />
+  <img src="/Kairos/img/logo.png" alt="Kairos Code" style={{width: '100px', height: '100px', borderRadius: '16px'}} />
 </div>
 
-**Terminal-native AI coding agent. Local-first, extensible, secure.**
+# Kairos Code
 
-Kairos Code runs locally with your choice of LLM backend. It provides a full-featured TUI, web interface, headless CLI mode, and a daemon server — all powered by Bun runtime.
+Terminal-native AI coding agent. Local-first, extensible, secure.
+
+Kairos Code runs locally with your choice of LLM backend. It provides a full-featured TUI, web interface, headless CLI mode, Telegram bot, and a daemon server — all powered by Bun runtime.
 
 ## Quick Start
 
@@ -26,11 +26,10 @@ bun run dev
 # Headless query
 bun run src/cli.ts -p "Explain this function"
 
-# Web interface
-bun run src/cli.ts web
+# Telegram bot
+export TELEGRAM_BOT_TOKEN=your_token_here
+bun run src/cli.ts telegram
 ```
-
-For detailed instructions, see [Getting Started](/docs/getting-started).
 
 ## Key Features
 
@@ -40,6 +39,7 @@ For detailed instructions, see [Getting Started](/docs/getting-started).
 - **Persistent memory** — SQLite-backed with FTS5 full-text search
 - **27 skills** — TDD, code review, security, deployment, research, and more
 - **Web search** — Brave API, Exa MCP, Mimo API, DuckDuckGo with auto-fallback
+- **Telegram bot** — Full-featured messaging with streaming, groups, webhook support
 - **TUI** — split panes, streaming, command palette, themes
 - **Web interface** — browser-based chat with streaming responses
 
@@ -54,6 +54,7 @@ For detailed instructions, see [Getting Started](/docs/getting-started).
 | [Skills](/docs/user-guide/skills) | 27 skills for common workflows |
 | [Safety](/docs/user-guide/safety) | Security pipeline and permissions |
 | [Memory](/docs/user-guide/memory) | Persistent memory system |
+| [Telegram](/docs/user-guide/telegram) | Telegram bot integration |
 | [TUI](/docs/user-guide/tui) | Terminal UI guide |
 | [Slash Commands](/docs/user-guide/slash-commands) | ~111 slash commands |
 | [API Reference](/docs/reference/api) | Programmatic API |
