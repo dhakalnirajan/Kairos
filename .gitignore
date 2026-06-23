@@ -20,3 +20,11 @@ bun.lock
 package-lock.json
 yarn.lock
 .pnpm-lock.yaml
+
+# Internal docs (not for repo)
+docs/meetings/
+DESIGN.md
+sdlc-agent.yaml
+docs/site/build/
+docs/site/node_modules/
+docs/site/.docusaurus/
