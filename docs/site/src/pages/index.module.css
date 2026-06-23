@@ -1,5 +1,5 @@
 .heroBanner {
-  padding: 4rem 0;
+  padding: 5rem 0;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -10,7 +10,7 @@
   height: 100px;
   margin-bottom: 1.5rem;
   border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 24px rgba(32, 138, 174, 0.3);
 }
 
 @media screen and (max-width: 996px) {
@@ -41,20 +41,23 @@
   text-align: center;
   padding: 1.5rem;
   border-radius: 12px;
-  border: 1px solid var(--ifm-border-color);
-  background: var(--ifm-background-surface-color);
-  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid #3A3A5C;
+  background: #16213E;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
   height: 100%;
 }
 
 .featureCard:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 16px rgba(32, 138, 174, 0.2);
+  border-color: #208AAE;
 }
 
 .featureIcon {
-  font-size: 2.5rem;
   margin-bottom: 0.75rem;
+  color: #208AAE;
+  display: flex;
+  justify-content: center;
 }
 
 .quickLinks {
@@ -70,19 +73,38 @@
 .quickLinkCard {
   padding: 1.25rem;
   border-radius: 8px;
-  border: 1px solid var(--ifm-border-color);
-  background: var(--ifm-background-surface-color);
-  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid #3A3A5C;
+  background: #16213E;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
   height: 100%;
 }
 
 .quickLinkCard:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 16px rgba(32, 138, 174, 0.2);
+  border-color: #208AAE;
 }
 
 .quickLinkIcon {
-  font-size: 1.5rem;
   margin-bottom: 0.5rem;
-  display: block;
+  color: #208AAE;
+  display: flex;
+}
+
+.techStack {
+  padding: 2rem 0 3rem;
+  border-top: 1px solid #3A3A5C;
+}
+
+.techItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  color: #A0A0A0;
+  font-size: 0.875rem;
+}
+
+.techItem svg {
+  color: #208AAE;
 }

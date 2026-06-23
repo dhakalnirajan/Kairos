@@ -89,7 +89,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `© ${new Date().getFullYear()} Kairos Code. Built with Docusaurus. MIT License.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Kairos Code. All Rights Reserved. Kairos Code is an open-source terminal-native AI coding agent built with Bun runtime. Licensed under the MIT License. Source code available on GitHub.`,
     },
     prism: {
       theme: prismThemes.github,
