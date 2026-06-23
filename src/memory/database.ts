@@ -1,4 +1,6 @@
 import { Database, type SQLQueryBindings } from "bun:sqlite";
+import { mkdirSync } from "fs";
+import { dirname } from "path";
 
 export interface ProjectIndexRow {
   id: number;
@@ -70,6 +72,9 @@ export class MemoryDatabase {
   private db: Database;
 
   constructor(dbPath: string = ":memory:") {
+    if (dbPath !== ":memory:") {
+      mkdirSync(dirname(dbPath), { recursive: true });
+    }
     this.db = new Database(dbPath);
     this.db.exec("PRAGMA journal_mode = WAL");
     this.db.exec("PRAGMA foreign_keys = ON");
