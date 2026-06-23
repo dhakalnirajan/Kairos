@@ -33,7 +33,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: docs/site
-        run: npm ci
+        run: npm install
 
       - name: Build documentation site
         working-directory: docs/site
